@@ -89,11 +89,6 @@ menu = st.sidebar.selectbox(
 
 
 
-# =====================================================
-# SEGMENTATION
-# =====================================================
-
-
 if menu == "Customer Segmentation":
 
 
