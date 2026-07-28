@@ -1,0 +1,61 @@
+TransactionID,CustomerID,ProductID,ProductName,Category,Brand,PurchaseDate,Quantity,Price,TotalAmount,Rating,DiscountUsed
+TXN-1001,CUST-141,PRD-7963,AirPods Pro,Electronics,Apple,2026-03-04,2,250.23,500.46,4.4,0%
+TXN-1002,CUST-135,PRD-4889,MX Master 3S Mouse,Electronics,Logitech,2026-01-08,1,346.73,294.72,4.2,15%
+TXN-1003,CUST-136,PRD-5090,Artisan Stand Mixer,Home & Kitchen,KitchenAid,2026-04-25,3,414.23,1242.69,4.5,0%
+TXN-1004,CUST-111,PRD-1150,Tundra 45 Cooler,Fitness & Outdoors,Yeti,2026-02-09,2,336.09,638.57,3.2,5%
+TXN-1005,CUST-125,PRD-5354,Curved Gaming Monitor,Electronics,Samsung,2026-06-04,3,1064.69,2555.26,3.9,20%
+TXN-1006,CUST-108,PRD-0197,Resistance Bands Set,Fitness & Outdoors,Peloton,2026-06-10,3,212.64,510.34,3.1,20%
+TXN-1007,CUST-143,PRD-2579,V15 Cordless Vacuum,Home & Kitchen,Dyson,2026-03-01,1,221.05,198.95,4.3,10%
+TXN-1008,CUST-124,PRD-1479,Pure Cool Air Purifier,Home & Kitchen,Dyson,2026-02-23,3,365.81,877.94,4.3,20%
+TXN-1009,CUST-139,PRD-1712,Duo 7-in-1 Pressure Cooker,Home & Kitchen,Instant Pot,2026-04-29,4,171.47,548.7,4.4,20%
+TXN-1010,CUST-115,PRD-7986,Air Max Sneakers,Fashion & Apparel,Nike,2026-01-09,3,90.17,270.51,3.4,0%
+TXN-1011,CUST-137,PRD-4843,Classic Track Jacket,Fashion & Apparel,Adidas,2026-04-12,4,51.42,205.68,3.5,0%
+TXN-1012,CUST-136,PRD-1527,Nano Puff Jacket,Fashion & Apparel,Patagonia,2026-04-03,2,179.6,359.2,4.0,0%
+TXN-1013,CUST-106,PRD-8352,MacBook Air M2,Electronics,Apple,2026-06-10,2,1046.33,1883.39,4.2,10%
+TXN-1014,CUST-125,PRD-8561,Edge Bike Computer,Fitness & Outdoors,Garmin,2026-05-16,3,340.6,1021.8,4.4,0%
+TXN-1015,CUST-108,PRD-7514,501 Original Fit Jeans,Fashion & Apparel,Levi's,2026-03-17,4,53.72,214.88,4.9,0%
+TXN-1016,CUST-147,PRD-4064,Ultraboost Running Shoes,Fashion & Apparel,Adidas,2026-06-10,3,156.25,398.44,4.2,15%
+TXN-1017,CUST-110,PRD-4064,Ultraboost Running Shoes,Fashion & Apparel,Adidas,2026-06-03,3,103.29,309.87,4.9,0%
+TXN-1018,CUST-120,PRD-5823,Vertuo Next Coffee Machine,Home & Kitchen,Nespresso,2026-05-26,1,88.53,79.68,4.6,10%
+TXN-1019,CUST-149,PRD-3724,Air Fryer Oven,Home & Kitchen,Instant Pot,2026-05-21,2,169.27,287.76,3.8,15%
+TXN-1020,CUST-114,PRD-1479,Pure Cool Air Purifier,Home & Kitchen,Dyson,2026-06-21,3,247.14,630.21,3.9,15%
+TXN-1021,CUST-116,PRD-6509,Milk Frother,Home & Kitchen,Nespresso,2026-01-06,2,314.79,629.58,3.1,0%
+TXN-1022,CUST-141,PRD-8565,Noise Canceling Headphones,Electronics,Sony,2026-01-09,3,166.44,499.32,3.6,0%
+TXN-1023,CUST-132,PRD-3724,Air Fryer Oven,Home & Kitchen,Instant Pot,2026-03-04,4,413.36,1653.44,3.2,0%
+TXN-1024,CUST-143,PRD-1150,Tundra 45 Cooler,Fitness & Outdoors,Yeti,2026-04-16,4,305.75,1223.0,4.3,0%
+TXN-1025,CUST-142,PRD-5915,iPad Air,Electronics,Apple,2026-03-28,1,383.35,383.35,4.1,0%
+TXN-1026,CUST-109,PRD-0197,Resistance Bands Set,Fitness & Outdoors,Peloton,2026-04-29,2,309.21,618.42,3.9,0%
+TXN-1027,CUST-136,PRD-8437,iPhone 15,Electronics,Apple,2026-01-24,2,282.89,509.2,4.0,10%
+TXN-1028,CUST-126,PRD-7268,4K OLED TV,Electronics,Sony,2026-01-01,4,403.54,1452.74,3.6,10%
+TXN-1029,CUST-145,PRD-9832,Guide AI Fitness Tracker,Fitness & Outdoors,Peloton,2026-03-17,2,339.83,577.71,4.5,15%
+TXN-1030,CUST-104,PRD-7986,Air Max Sneakers,Fashion & Apparel,Nike,2026-05-30,4,105.42,358.43,3.3,15%
+TXN-1031,CUST-133,PRD-8565,Noise Canceling Headphones,Electronics,Sony,2026-06-02,1,903.75,903.75,3.8,0%
+TXN-1032,CUST-137,PRD-5823,Vertuo Next Coffee Machine,Home & Kitchen,Nespresso,2026-04-18,3,470.61,1411.83,4.3,0%
+TXN-1033,CUST-121,PRD-1479,Pure Cool Air Purifier,Home & Kitchen,Dyson,2026-02-03,3,255.74,767.22,3.0,0%
+TXN-1034,CUST-140,PRD-8352,MacBook Air M2,Electronics,Apple,2026-05-10,3,241.59,688.53,4.8,5%
+TXN-1035,CUST-116,PRD-7514,501 Original Fit Jeans,Fashion & Apparel,Levi's,2026-04-23,3,121.75,292.2,4.1,20%
+TXN-1036,CUST-143,PRD-7986,Air Max Sneakers,Fashion & Apparel,Nike,2026-03-09,1,163.46,130.77,4.1,20%
+TXN-1037,CUST-118,PRD-4843,Classic Track Jacket,Fashion & Apparel,Adidas,2026-02-22,3,105.81,301.56,4.8,5%
+TXN-1038,CUST-104,PRD-0002,Mechanical Keyboard,Electronics,Logitech,2026-01-12,1,486.93,486.93,4.3,0%
+TXN-1039,CUST-117,PRD-0008,2-Slice Toaster,Home & Kitchen,KitchenAid,2026-05-24,1,100.33,80.26,4.8,20%
+TXN-1040,CUST-135,PRD-3237,Galaxy Watch 6,Electronics,Samsung,2026-05-22,2,604.33,1208.66,3.6,0%
+TXN-1041,CUST-103,PRD-4064,Ultraboost Running Shoes,Fashion & Apparel,Adidas,2026-06-20,1,83.05,70.59,4.8,15%
+TXN-1042,CUST-127,PRD-1712,Duo 7-in-1 Pressure Cooker,Home & Kitchen,Instant Pot,2026-02-15,4,61.14,195.65,4.8,20%
+TXN-1043,CUST-127,PRD-2579,V15 Cordless Vacuum,Home & Kitchen,Dyson,2026-06-29,1,222.13,222.13,4.7,0%
+TXN-1044,CUST-115,PRD-0008,2-Slice Toaster,Home & Kitchen,KitchenAid,2026-03-20,2,150.31,240.5,3.4,20%
+TXN-1045,CUST-122,PRD-4794,Dri-FIT Running Shorts,Fashion & Apparel,Nike,2026-03-31,4,131.92,448.53,3.7,15%
+TXN-1046,CUST-102,PRD-1230,Galaxy S24,Electronics,Samsung,2026-05-29,3,126.66,322.98,3.9,15%
+TXN-1047,CUST-147,PRD-1140,Better Sweater Fleece,Fashion & Apparel,Patagonia,2026-04-09,2,68.2,109.12,3.9,20%
+TXN-1048,CUST-134,PRD-1479,Pure Cool Air Purifier,Home & Kitchen,Dyson,2026-01-18,3,330.41,792.98,4.7,20%
+TXN-1049,CUST-147,PRD-8129,Denim Jacket,Fashion & Apparel,Levi's,2026-03-25,4,134.58,457.57,3.3,15%
+TXN-1050,CUST-127,PRD-5632,Forerunner 265 GPS Watch,Fitness & Outdoors,Garmin,2026-06-07,3,156.97,470.91,3.6,0%
+TXN-1051,CUST-114,PRD-8561,Edge Bike Computer,Fitness & Outdoors,Garmin,2026-04-30,4,168.7,674.8,4.0,0%
+TXN-1052,CUST-148,PRD-6509,Milk Frother,Home & Kitchen,Nespresso,2026-05-12,3,92.01,276.03,4.3,0%
+TXN-1053,CUST-115,PRD-1712,Duo 7-in-1 Pressure Cooker,Home & Kitchen,Instant Pot,2026-01-12,2,492.76,837.69,4.7,15%
+TXN-1054,CUST-105,PRD-7622,Rambler 30 oz Tumbler,Fitness & Outdoors,Yeti,2026-06-28,4,185.67,742.68,3.3,0%
+TXN-1055,CUST-145,PRD-5915,iPad Air,Electronics,Apple,2026-02-26,2,1061.0,1697.6,4.0,20%
+TXN-1056,CUST-104,PRD-6509,Milk Frother,Home & Kitchen,Nespresso,2026-02-04,4,350.4,1191.36,4.2,15%
+TXN-1057,CUST-149,PRD-8561,Edge Bike Computer,Fitness & Outdoors,Garmin,2026-05-21,4,316.59,1013.09,4.7,20%
+TXN-1058,CUST-129,PRD-4843,Classic Track Jacket,Fashion & Apparel,Adidas,2026-05-14,4,124.01,471.24,3.9,5%
+TXN-1059,CUST-146,PRD-4843,Classic Track Jacket,Fashion & Apparel,Adidas,2026-03-27,3,163.95,491.85,3.3,0%
+TXN-1060,CUST-115,PRD-5632,Forerunner 265 GPS Watch,Fitness & Outdoors,Garmin,2026-06-30,2,45.87,82.57,3.7,10%
