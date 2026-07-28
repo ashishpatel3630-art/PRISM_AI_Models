@@ -57,19 +57,19 @@ clv_features = joblib.load(
 
 purchase_model = joblib.load(
     os.path.join(BASE_PATH,
-    "next_purchase_amount_model.pkl")
+    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_model.pkl")
 )
 
 
 purchase_scaler = joblib.load(
     os.path.join(BASE_PATH,
-    "next_purchase_amount_scaler.pkl")
+    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_scaler.pkl")
 )
 
 
 purchase_features = joblib.load(
     os.path.join(BASE_PATH,
-    "next_purchase_amount_features.pkl")
+    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_features.pkl")
 )
 
 
@@ -84,7 +84,7 @@ fraud_model = joblib.load(
 
 fraud_scaler = joblib.load(
     os.path.join(BASE_PATH,
-    "fraud_scaler.pkl")
+    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/fraud_model.pkl")
 )
 
 
@@ -113,3 +113,4 @@ similarity = joblib.load(
     os.path.join(BASE_PATH,
     "recommendation_similarity.pkl")
 )
+print("done")
