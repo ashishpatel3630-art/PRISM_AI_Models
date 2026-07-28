@@ -1,0 +1,24 @@
+ProductID,ProductName,Category,Brand,Price,Rating,Description,Stock
+PRD-3394,iPhone 15,Electronics,Apple,799.99,4.6,"Latest flagship smartphone featuring an advanced dual-camera system, Dynamic Island, and A16 Bionic chip.",0
+PRD-1233,MacBook Air M2,Electronics,Apple,1099.0,4.7,"Lightweight and powerful laptop with Apple M2 chip, 13.6-inch Liquid Retina display, and 18-hour battery life.",25
+PRD-0363,AirPods Pro,Electronics,Apple,249.0,4.2,"Active Noise Cancellation, Adaptive Audio, and Transparency mode with personalized Spatial Audio.",5
+PRD-1620,Noise Canceling Headphones,Electronics,Sony,348.0,4.6,Industry-leading noise canceling wireless headphones with crystal-clear hands-free calling.,350
+PRD-8323,4K OLED TV 55-inch,Electronics,Sony,1398.0,4.1,Stunning 4K OLED picture quality with immersive sound and Google TV integration.,120
+PRD-4684,Galaxy S24,Electronics,Samsung,799.99,4.0,AI-powered smartphone with Nightography camera capabilities and high-brightness AMOLED display.,5
+PRD-7816,Curved Gaming Monitor 32-inch,Electronics,Samsung,449.99,4.2,1000R curved screen with 165Hz refresh rate and 1ms response time for immersive gaming.,350
+PRD-9138,MX Master 3S Mouse,Electronics,Logitech,99.99,4.5,Ergonomic wireless performance mouse with 8K DPI tracking and Quiet Clicks.,350
+PRD-1167,Mechanical Wireless Keyboard,Electronics,Logitech,149.99,4.2,Tactile quiet mechanical switches with smart illumination and multi-device pairing.,350
+PRD-9509,Vertuo Next Coffee Machine,Home & Kitchen,Nespresso,169.0,4.4,Compact single-serve espresso and coffee maker utilizing Centrifusion technology.,200
+PRD-5952,Duo 7-in-1 Pressure Cooker,Home & Kitchen,Instant Pot,89.95,4.5,"Multi-functional electric pressure cooker, slow cooker, rice cooker, and steamer.",0
+PRD-0578,V15 Cordless Vacuum,Home & Kitchen,Dyson,749.99,4.7,Intelligent cordless vacuum with laser illumination to reveal invisible dust.,12
+PRD-8829,Pure Cool Air Purifier,Home & Kitchen,Dyson,399.99,4.6,Dual-function HEPA air purifier and oscillating fan for large rooms.,75
+PRD-2668,Artisan Stand Mixer,Home & Kitchen,KitchenAid,449.99,4.3,Classic 5-quart tilt-head stand mixer with 10 speeds and iconic metallic finish.,25
+PRD-7162,Air Max Sneakers,Fashion & Apparel,Nike,130.0,4.9,Iconic cushioning and modern style designed for all-day streetwear comfort.,75
+PRD-7863,Dri-FIT Running Shorts,Fashion & Apparel,Nike,35.0,4.1,"Lightweight, moisture-wicking woven fabric for breathable comfort during runs.",120
+PRD-3506,Ultraboost Running Shoes,Fashion & Apparel,Adidas,190.0,4.1,Responsive Boost midsole and Continental Rubber outsole for high performance.,75
+PRD-0769,501 Original Fit Jeans,Fashion & Apparel,Levi's,79.5,4.5,The classic straight-leg fit denim jeans crafted with durable cotton denim.,0
+PRD-4477,Better Sweater Fleece,Fashion & Apparel,Patagonia,139.0,4.7,"Warm, low-impact fleece jacket made from 100% recycled polyester.",350
+PRD-5846,Guide AI Fitness Tracker,Fitness & Outdoors,Peloton,195.0,4.1,AI-powered connected fitness camera that turns your TV into a guided home gym.,120
+PRD-3606,Rambler 30 oz Tumbler,Fitness & Outdoors,Yeti,38.0,4.1,Double-wall vacuum insulated stainless steel tumbler with MagSlider lid.,40
+PRD-8391,Tundra 45 Cooler,Fitness & Outdoors,Yeti,325.0,4.7,Heavy-duty rotomolded cooler with up to 3 inches of PermaFrost insulation.,75
+PRD-9944,Forerunner 265 GPS Watch,Fitness & Outdoors,Garmin,449.99,4.5,Dedicated running smartwatch with bright AMOLED display and advanced training metrics.,5
