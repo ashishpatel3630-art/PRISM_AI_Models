@@ -1,13 +1,4 @@
-function Segmentation(){
-
-return(
-
-<h1 className="text-3xl font-bold">
-Customer Segmentation AI
-</h1>
-
-)
-
+import GlassCard from '../components/GlassCard';
+export default function Segmentation() {
+  return <GlassCard><h1 className="text-xl font-bold text-white">Customer Segmentation</h1></GlassCard>;
 }
-
-export default Segmentation;

@@ -1,66 +1,104 @@
-import Card from "../components/Card";
+import GlassCard from '../components/GlassCard';
+import RevenueChart from '../charts/RevenueChart';
+import SegmentChart from '../charts/SegmentChart';
+import RiskChart from '../charts/RiskChart';
+import { Sparkles, TrendingUp, Users, AlertTriangle } from 'lucide-react';
 
+const Dashboard = () => {
+  return (
+    <div className="space-y-8">
+      {/* Hero Welcome */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-white">Good Morning, Ashish 👋</h1>
+          <p className="text-sm text-slate-400">AI-powered customer intelligence at your fingertips.</p>
+        </div>
+      </div>
 
-function Dashboard(){
+      {/* Metric Cards */}
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <GlassCard>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs text-slate-400 font-medium">Total Customers</p>
+              <h3 className="text-2xl font-bold text-white mt-1">145,230</h3>
+            </div>
+            <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400"><Users className="h-5 w-5" /></div>
+          </div>
+          <p className="mt-3 text-xs text-emerald-400 flex items-center gap-1"><TrendingUp className="h-3 w-3"/> +5.2% from last month</p>
+        </GlassCard>
 
+        <GlassCard>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs text-slate-400 font-medium">Avg Health Score</p>
+              <h3 className="text-2xl font-bold text-white mt-1">84/100</h3>
+            </div>
+            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400"><Sparkles className="h-5 w-5" /></div>
+          </div>
+          <p className="mt-3 text-xs text-emerald-400 flex items-center gap-1"><TrendingUp className="h-3 w-3"/> +1.5% improvement</p>
+        </GlassCard>
 
-return(
+        <GlassCard>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs text-slate-400 font-medium">High Risk Customers</p>
+              <h3 className="text-2xl font-bold text-white mt-1">2,450</h3>
+            </div>
+            <div className="p-2 rounded-lg bg-rose-500/10 text-rose-400"><AlertTriangle className="h-5 w-5" /></div>
+          </div>
+          <p className="mt-3 text-xs text-rose-400 flex items-center gap-1">-1.8% drop this week</p>
+        </GlassCard>
 
-<div>
+        <GlassCard>
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-xs text-slate-400 font-medium">Predicted Revenue</p>
+              <h3 className="text-2xl font-bold text-white mt-1">$12.5M</h3>
+            </div>
+            <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400"><TrendingUp className="h-5 w-5" /></div>
+          </div>
+          <p className="mt-3 text-xs text-slate-400">Next Quarter Forecast</p>
+        </GlassCard>
+      </div>
 
+      {/* Main Charts Row */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <GlassCard className="lg:col-span-2">
+          <h2 className="text-lg font-semibold text-slate-100 mb-4">Revenue & Growth Forecast</h2>
+          <RevenueChart />
+        </GlassCard>
 
-<h1 className="
-text-4xl
-font-bold
-">
+        {/* AI Recommendations Panel */}
+        <GlassCard className="bg-gradient-to-b from-purple-900/20 to-cyan-900/10 border-cyan-500/20">
+          <div className="flex items-center gap-2 mb-4 text-cyan-400 font-semibold">
+            <Sparkles className="h-5 w-5" />
+            <span>AI Insights Engine</span>
+          </div>
+          <ul className="space-y-4 text-xs text-slate-300">
+            <li className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+              ⚡ <strong className="text-white">High Churn Risk:</strong> 245 enterprise customers showed a drop in activity.
+            </li>
+            <li className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+              💎 <strong className="text-white">Upsell Opportunity:</strong> Offer premium plan to top 112 loyal users.
+            </li>
+          </ul>
+        </GlassCard>
+      </div>
 
-Executive Dashboard
-
-</h1>
-
-
-
-<div className="
-grid
-grid-cols-4
-gap-6
-mt-10
-">
-
-
-<Card
-title="Total Customers"
-value="50K"
-/>
-
-
-<Card
-title="Churn Risk"
-value="12%"
-/>
-
-
-<Card
-title="Revenue"
-value="₹25L"
-/>
-
-
-<Card
-title="AI Score"
-value="94%"
-/>
-
-
-</div>
-
-
-
-</div>
-
-)
-
-}
-
+      {/* Bottom Visualization Grid */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <GlassCard>
+          <h2 className="text-lg font-semibold text-slate-100 mb-4">Customer Segmentation</h2>
+          <SegmentChart />
+        </GlassCard>
+        <GlassCard>
+          <h2 className="text-lg font-semibold text-slate-100 mb-4">Risk Distribution</h2>
+          <RiskChart />
+        </GlassCard>
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;

@@ -1,9 +1,4 @@
-function Fraud(){
-
-return <h1 className="text-3xl font-bold">
-Fraud Detection AI
-</h1>
-
+import GlassCard from '../components/GlassCard';
+export default function Fraud() {
+  return <GlassCard><h1 className="text-xl font-bold text-white">Fraud & Anomaly Detection</h1></GlassCard>;
 }
-
-export default Fraud;
