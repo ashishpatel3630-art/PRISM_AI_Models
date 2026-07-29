@@ -1,116 +1,104 @@
-import joblib
 import os
+import joblib
 
 
-BASE_PATH = "../models"
-
-
-
-segmentation_model = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/customer_segmentation_model.pkl")
+BASE_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "../../"
+    )
 )
 
 
-segmentation_scaler = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/segmentation_scaler.pkl")
-)
-
-
-
-# Churn
+# =====================
+# CHURN
+# =====================
 
 churn_model = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/churn_model.pkl")
+    os.path.join(BASE_PATH,"models/churn_model.pkl")
 )
-
 
 churn_scaler = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/churn_scaler.pkl")
+    os.path.join(BASE_PATH,"models/churn_scaler.pkl")
 )
-
 
 churn_features = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/churn_features.pkl")
+    os.path.join(BASE_PATH,"models/churn_features.pkl")
 )
 
 
+
+# =====================
+# SEGMENTATION
+# =====================
+
+segmentation_model = joblib.load(
+    os.path.join(BASE_PATH,"models/customer_segmentation_model.pkl")
+)
+
+segmentation_scaler = joblib.load(
+    os.path.join(BASE_PATH,"models/segmentation_scaler.pkl")
+)
+
+segmentation_features = joblib.load(
+    os.path.join(BASE_PATH,"models/segmentation_features.pkl")
+)
+
+
+
+# =====================
+# CLV
+# =====================
 
 clv_model = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/clv_model.pkl")
+    os.path.join(BASE_PATH,"models/clv_model.pkl")
 )
-
 
 clv_features = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/clv_features.pkl")
+    os.path.join(BASE_PATH,"models/clv_features.pkl")
 )
 
 
 
-# Next Purchase
-
-purchase_model = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_model.pkl")
-)
-
-
-purchase_scaler = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_scaler.pkl")
-)
-
-
-purchase_features = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/next_purchase_amount_features.pkl")
-)
-
-
-
-# Fraud
+# =====================
+# FRAUD
+# =====================
 
 fraud_model = joblib.load(
-    os.path.join(BASE_PATH,
-    "fraud_model.pkl")
+    os.path.join(BASE_PATH,"models/fraud_model.pkl")
 )
-
 
 fraud_scaler = joblib.load(
-    os.path.join(BASE_PATH,
-    "/Users/aashishmewada/Desktop/PRISM AI/PRISM_AI/models/fraud_model.pkl")
+    os.path.join(BASE_PATH,"models/fraud_scaler.pkl")
 )
-
 
 fraud_features = joblib.load(
-    os.path.join(BASE_PATH,
-    "fraud_features.pkl")
+    os.path.join(BASE_PATH,"models/fraud_features.pkl")
 )
 
 
 
-# Recommendation
+# =====================
+# NEXT PURCHASE
+# =====================
 
-products = joblib.load(
-    os.path.join(BASE_PATH,
-    "products.pkl")
+next_purchase_model = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "models/next_purchase_amount_model.pkl"
+    )
 )
 
-
-vectorizer = joblib.load(
-    os.path.join(BASE_PATH,
-    "tfidf_vectorizer.pkl")
+next_purchase_scaler = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "models/next_purchase_amount_scaler.pkl"
+    )
 )
 
-
-similarity = joblib.load(
-    os.path.join(BASE_PATH,
-    "recommendation_similarity.pkl")
+next_purchase_features = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "models/next_purchase_amount_features.pkl"
+    )
 )
-print("done")

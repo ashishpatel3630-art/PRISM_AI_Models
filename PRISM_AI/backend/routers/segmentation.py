@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import numpy as np
 
-from services.model_loader import (
+from backend.services.model_loader import (
     segmentation_model,
     segmentation_scaler
 )

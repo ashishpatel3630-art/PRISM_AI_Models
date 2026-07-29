@@ -2,11 +2,13 @@ from fastapi import APIRouter
 import pandas as pd
 
 
-from services.model_loader import (
+
+from backend.services.model_loader import (
     churn_model,
     churn_scaler,
     churn_features
 )
+from fastapi import APIRouter
 
 
 router = APIRouter(

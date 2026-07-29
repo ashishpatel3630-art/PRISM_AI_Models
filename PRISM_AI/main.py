@@ -1,20 +1,46 @@
 from fastapi import FastAPI
 
+from backend.middleware.logging import LoggingMiddleware
+
 from backend.routers import (
+    auth,
     churn,
+    segmentation,
     clv,
     fraud,
-    next_purchase,
     recommendation,
-    segmentation
+    next_purchase,
 )
 
 
 app = FastAPI(
-    title="PRISM AI Platform",
-    description="AI Customer Intelligence Platform",
-    version="1.0"
+    title="PRISM AI",
+    version="1.0.0"
 )
+
+
+# Middleware
+
+app.add_middleware(
+    LoggingMiddleware
+)
+
+
+# Routers
+
+app.include_router(auth.router)
+
+app.include_router(churn.router)
+
+app.include_router(segmentation.router)
+
+app.include_router(clv.router)
+
+app.include_router(fraud.router)
+
+app.include_router(recommendation.router)
+
+app.include_router(next_purchase.router)
 
 
 
@@ -22,60 +48,5 @@ app = FastAPI(
 def home():
 
     return {
-        "message":"PRISM AI API Running 🚀",
-        "models":[
-            "Churn Prediction",
-            "Customer Lifetime Value",
-            "Fraud Detection",
-            "Next Purchase Amount",
-            "Recommendation Engine",
-            "Customer Segmentation"
-        ]
+        "message": "PRISM AI Backend Running"
     }
-
-
-
-app.include_router(
-    churn.router,
-    prefix="/churn",
-    tags=["Churn"]
-)
-
-
-app.include_router(
-    clv.router,
-    prefix="/clv",
-    tags=["Customer Lifetime Value"]
-)
-
-
-
-app.include_router(
-    fraud.router,
-    prefix="/fraud",
-    tags=["Fraud Detection"]
-)
-
-
-
-app.include_router(
-    next_purchase.router,
-    prefix="/purchase",
-    tags=["Next Purchase"]
-)
-
-
-
-app.include_router(
-    recommendation.router,
-    prefix="/recommendation",
-    tags=["Recommendation"]
-)
-
-
-
-app.include_router(
-    segmentation.router,
-    prefix="/segmentation",
-    tags=["Segmentation"]
-)

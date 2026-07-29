@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from services.model_loader import(
+from backend.services.model_loader import(
 products,
 similarity
 )

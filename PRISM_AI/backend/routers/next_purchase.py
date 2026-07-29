@@ -2,7 +2,7 @@ from fastapi import APIRouter
 import pandas as pd
 
 
-from services.model_loader import(
+from backend.services.model_loader import(
 purchase_model,
 purchase_scaler,
 purchase_features
