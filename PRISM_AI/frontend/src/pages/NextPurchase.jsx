@@ -1,57 +1,68 @@
-import React, {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import GlassCard from "../components/GlassCard";
-import {ShoppingCart, Clock} from "lucide-react";
+import { ShoppingCart, Clock } from "lucide-react";
 import api from "../api/axios";
 
 
-const NextPurchase =()=>{
+const NextPurchase = () => {
 
-
-const [predictions,setPredictions]=useState([]);
+const [predictions,setPredictions] = useState([]);
+const [loading,setLoading] = useState(true);
 
 
 useEffect(()=>{
 
-const fetchData=async()=>{
+    const fetchPredictions = async()=>{
 
-try{
+        try{
 
-const res = await api.get(
-"/next_purchase"
-);
+            const response = await api.get(
+                "/next-purchase/next_purchase/"
+            );
+
+            setPredictions(response.data);
+
+        }
+        catch(error){
+
+            console.log(
+                "API ERROR:",
+                error
+            );
+
+        }
+        finally{
+            setLoading(false);
+        }
+
+    }
 
 
-console.log(res.data);
-
-setPredictions(res.data);
-
-
-}
-catch(error){
-
-console.log(
-"API ERROR:",
-error
-);
-
-}
-
-};
-
-
-fetchData();
+    fetchPredictions();
 
 
 },[]);
 
 
 
+if(loading){
+
+return(
+<div className="text-white">
+Loading AI Predictions...
+</div>
+)
+
+}
+
+
+
 return (
 
-<div>
+<div className="p-6">
 
 
-<h1 className="text-3xl text-white font-bold">
+<h1 className="text-3xl font-bold text-white">
 Next Purchase & Expansion Predictor
 </h1>
 
@@ -74,18 +85,26 @@ predictions.map((p,index)=>(
 
 <div className="flex justify-between">
 
+<span className="
+p-3 rounded-xl
+bg-purple-500/10
+text-purple-400
+">
 
-<div className="p-2 rounded-xl bg-purple-500/10">
+<ShoppingCart/>
 
-<ShoppingCart 
-className="text-purple-400"
-/>
-
-</div>
+</span>
 
 
-<span className="text-emerald-400">
-{p.likelihood}%
+<span className="
+bg-emerald-500/10
+text-emerald-400
+px-3 py-1
+rounded-lg
+">
+
+{p.likelihood}% Propensity
+
 </span>
 
 
@@ -93,7 +112,11 @@ className="text-purple-400"
 
 
 
-<h2 className="text-white mt-5 text-xl">
+<h2 className="
+text-white 
+font-semibold 
+mt-5
+">
 
 {p.customer}
 
@@ -101,20 +124,38 @@ className="text-purple-400"
 
 
 
-<p className="text-slate-400 mt-2">
+<p className="text-slate-400 text-sm mt-2">
+
+Predicted Item:
+
+<span className="text-white ml-2">
 
 {p.product}
+
+</span>
 
 </p>
 
 
 
-<div className="flex justify-between mt-5">
+<div className="
+border-t 
+border-slate-800
+mt-5
+pt-4
+flex
+justify-between
+">
 
 
-<span className="text-slate-400 flex gap-2">
+<span className="
+text-slate-400
+flex
+gap-2
+items-center
+">
 
-<Clock size={16}/>
+<Clock size={15}/>
 
 {p.expectedDate}
 
@@ -122,7 +163,10 @@ className="text-purple-400"
 
 
 
-<span className="text-cyan-400">
+<span className="
+text-cyan-400
+font-bold
+">
 
 {p.dealValue}
 
@@ -132,12 +176,11 @@ className="text-purple-400"
 </div>
 
 
+
 </GlassCard>
 
 
 ))
-
-
 }
 
 
