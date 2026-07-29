@@ -1,23 +1,8 @@
 from fastapi import FastAPI
-
-from backend.middleware.logging import LoggingMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.middleware.logging import LoggingMiddleware
 
-app = FastAPI(
-    title="PRISM AI API"
-)
-
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 from backend.routers import (
     churn,
     segmentation,
@@ -28,9 +13,27 @@ from backend.routers import (
 )
 
 
+app = FastAPI(
+    title="PRISM AI API",
+    version="1.0.0"
+)
 
 
-# Middleware
+# CORS Configuration
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# Custom Middleware
 
 app.add_middleware(
     LoggingMiddleware
@@ -39,19 +42,41 @@ app.add_middleware(
 
 # Routers
 
+app.include_router(
+    churn.router,
+    prefix="/api/churn",
+    tags=["Churn Prediction"]
+)
 
+app.include_router(
+    segmentation.router,
+    prefix="/api/segmentation",
+    tags=["Customer Segmentation"]
+)
 
-app.include_router(churn.router)
+app.include_router(
+    clv.router,
+    prefix="/api/clv",
+    tags=["Customer Lifetime Value"]
+)
 
-app.include_router(segmentation.router)
+app.include_router(
+    fraud.router,
+    prefix="/api/fraud",
+    tags=["Fraud Detection"]
+)
 
-app.include_router(clv.router)
+app.include_router(
+    recommendation.router,
+    prefix="/api/recommendation",
+    tags=["Recommendation Engine"]
+)
 
-app.include_router(fraud.router)
-
-app.include_router(recommendation.router)
-
-app.include_router(next_purchase.router)
+app.include_router(
+    next_purchase.router,
+    prefix="/api/next-purchase",
+    tags=["Next Purchase Prediction"]
+)
 
 
 
@@ -59,16 +84,5 @@ app.include_router(next_purchase.router)
 def home():
 
     return {
-        "message": "PRISM AI Backend Running"
+        "message": "PRISM AI Backend Running 🚀"
     }
-    
-    
-    app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
