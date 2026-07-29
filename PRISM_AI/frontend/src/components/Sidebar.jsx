@@ -3,8 +3,12 @@ LayoutDashboard,
 Brain,
 Users,
 DollarSign,
-ShieldCheck
+ShieldCheck,
+ShoppingCart
 } from "lucide-react";
+
+
+import {Link} from "react-router-dom";
 
 
 function Sidebar(){
@@ -13,7 +17,7 @@ return (
 
 <div className="
 w-64
-h-screen
+min-h-screen
 bg-black
 text-white
 p-6
@@ -21,50 +25,57 @@ p-6
 
 
 <h1 className="
-text-2xl
+text-3xl
 font-bold
 mb-10
 ">
+
 PRISM AI
+
 </h1>
 
 
 
-<nav className="space-y-5">
+<div className="space-y-6">
 
 
-<div className="flex gap-3">
+<Link to="/">
 <LayoutDashboard/>
 Dashboard
-</div>
+</Link>
 
 
-<div className="flex gap-3">
+<Link to="/churn">
 <Brain/>
 Churn AI
-</div>
+</Link>
 
 
-<div className="flex gap-3">
+<Link to="/segmentation">
 <Users/>
 Segmentation
-</div>
+</Link>
 
 
-<div className="flex gap-3">
+<Link to="/clv">
 <DollarSign/>
 CLV Prediction
-</div>
+</Link>
 
 
-<div className="flex gap-3">
+<Link to="/fraud">
 <ShieldCheck/>
 Fraud Detection
+</Link>
+
+
+<Link to="/recommendation">
+<ShoppingCart/>
+Recommendation
+</Link>
+
+
 </div>
-
-
-
-</nav>
 
 
 </div>
