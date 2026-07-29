@@ -3,9 +3,9 @@ import pandas as pd
 
 
 from backend.services.model_loader import(
-purchase_model,
-purchase_scaler,
-purchase_features
+    next_purchase_amount_model,
+    next_purchase_amount_scaler,
+    next_purchase_amount_features
 )
 
 
@@ -25,15 +25,15 @@ def predict(data:dict):
     )
 
 
-    df=df[purchase_features]
+    df=df[next_purchase_amount_features]
 
 
-    scaled=purchase_scaler.transform(
+    scaled=next_purchase_amount_scaler.transform(
         df
     )
 
 
-    result=purchase_model.predict(
+    result=next_purchase_amount_model.predict(
         scaled
     )[0]
 

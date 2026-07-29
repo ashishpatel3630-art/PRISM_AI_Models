@@ -3,7 +3,6 @@ from fastapi import FastAPI
 from backend.middleware.logging import LoggingMiddleware
 
 from backend.routers import (
-    auth,
     churn,
     segmentation,
     clv,
@@ -28,7 +27,7 @@ app.add_middleware(
 
 # Routers
 
-app.include_router(auth.router)
+
 
 app.include_router(churn.router)
 

@@ -1,52 +1,156 @@
+import os
+import joblib
+
 from fastapi import APIRouter
 
-from backend.services.model_loader import(
-products,
-similarity
+router = APIRouter(
+    prefix="/recommendation",
+    tags=["Recommendation"]
+)
+
+BASE_PATH = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "../../models"
+    )
 )
 
 
-router=APIRouter(
-prefix="/recommendation",
-tags=["Recommendation"]
+if not os.path.exists(BASE_PATH):
+    raise FileNotFoundError(
+        f"Models folder not found: {BASE_PATH}"
+    )
+# ---------------- CHURN ----------------
+
+churn_model = joblib.load(
+    os.path.join(BASE_PATH,"churn_model.pkl")
+)
+
+churn_scaler = joblib.load(
+    os.path.join(BASE_PATH,"churn_scaler.pkl")
+)
+
+churn_features = joblib.load(
+    os.path.join(BASE_PATH,"churn_features.pkl")
 )
 
 
 
-@router.get("/{product_id}")
-def recommend(product_id:str):
+# ---------------- SEGMENTATION ----------------
 
-
-    index = products[
-        products["ProductID"]==product_id
-    ].index[0]
-
-
-    scores=list(
-        enumerate(similarity[index])
+segmentation_model = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "customer_segmentation_model.pkl"
     )
+)
 
-
-    scores=sorted(
-        scores,
-        key=lambda x:x[1],
-        reverse=True
+segmentation_scaler = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "segmentation_scaler.pkl"
     )
+)
+
+segmentation_features = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "segmentation_features.pkl"
+    )
+)
 
 
-    result=[]
+
+# ---------------- CLV ----------------
+
+clv_model = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "clv_model.pkl"
+    )
+)
+
+clv_features = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "clv_features.pkl"
+    )
+)
 
 
-    for i,_ in scores[1:6]:
 
-        result.append(
-            products.iloc[i]["ProductName"]
-        )
+# ---------------- FRAUD ----------------
+
+fraud_model = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "fraud_model.pkl"
+    )
+)
+
+fraud_scaler = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "fraud_scaler.pkl"
+    )
+)
+
+fraud_features = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "fraud_features.pkl"
+    )
+)
 
 
-    return{
 
-        "recommendations":
-        result
+# ---------------- RECOMMENDATION ----------------
 
-    }
+recommendation_similarity = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "recommendation_similarity.pkl"
+    )
+)
+
+products = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "products.pkl"
+    )
+)
+
+user_product = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "user_product.pkl"
+    )
+)
+
+
+
+# ---------------- NEXT PURCHASE ----------------
+
+next_purchase_amount_model = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "next_purchase_amount_model.pkl"
+    )
+)
+
+next_purchase_amount_scaler = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "next_purchase_amount_scaler.pkl"
+    )
+)
+
+next_purchase_amount_features = joblib.load(
+    os.path.join(
+        BASE_PATH,
+        "next_purchase_amount_features.pkl"
+    )
+)
+
+
+print("All ML Models Loaded Successfully 🚀")
