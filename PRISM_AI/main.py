@@ -1,7 +1,23 @@
 from fastapi import FastAPI
 
 from backend.middleware.logging import LoggingMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
+
+app = FastAPI(
+    title="PRISM AI API"
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 from backend.routers import (
     churn,
     segmentation,
@@ -12,10 +28,6 @@ from backend.routers import (
 )
 
 
-app = FastAPI(
-    title="PRISM AI",
-    version="1.0.0"
-)
 
 
 # Middleware
@@ -49,3 +61,14 @@ def home():
     return {
         "message": "PRISM AI Backend Running"
     }
+    
+    
+    app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
