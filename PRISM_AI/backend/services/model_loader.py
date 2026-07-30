@@ -10,7 +10,6 @@ BASE_PATH = os.path.join(
 
 # ======================
 # CHURN
-# ======================
 
 churn_model = joblib.load(
     os.path.join(BASE_PATH,"churn_model.pkl")

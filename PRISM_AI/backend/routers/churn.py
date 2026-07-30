@@ -4,9 +4,7 @@ import pandas as pd
 
 
 from backend.services.model_loader import (
-    churn_model,
-    churn_scaler,
-    churn_features
+   churn_pipeline
 )
 from fastapi import APIRouter
 
@@ -54,3 +52,13 @@ def predict(data:dict):
         float(probability)
 
     }
+from pydantic import BaseModel
+
+
+class ChurnData(BaseModel):
+    Age:int
+    Income:float
+    Tenure:int
+    MonthlySpend:float
+    TotalTransactions:int
+    SatisfactionScore:float
