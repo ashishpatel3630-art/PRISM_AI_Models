@@ -1,17 +1,12 @@
 from fastapi import APIRouter
 import pandas as pd
 
-
-
-from backend.services.model_loader import (
-   churn_pipeline
-)
-from fastapi import APIRouter
+from backend.services.model_loader import churn_model
 
 
 router = APIRouter(
     prefix="/churn",
-    tags=["Churn"]
+    tags=["Churn Prediction"]
 )
 
 
@@ -25,40 +20,20 @@ def predict(data:dict):
     )
 
 
-    df=df[churn_features]
-
-
-    scaled = churn_scaler.transform(
-        df
-    )
-
-
     prediction = churn_model.predict(
-        scaled
+        df
     )[0]
 
 
     probability = churn_model.predict_proba(
-        scaled
+        df
     )[0][1]
 
 
     return {
 
-        "prediction":
-        int(prediction),
+        "prediction": int(prediction),
 
-        "probability":
-        float(probability)
+        "churn_probability": float(probability)
 
     }
-from pydantic import BaseModel
-
-
-class ChurnData(BaseModel):
-    Age:int
-    Income:float
-    Tenure:int
-    MonthlySpend:float
-    TotalTransactions:int
-    SatisfactionScore:float
