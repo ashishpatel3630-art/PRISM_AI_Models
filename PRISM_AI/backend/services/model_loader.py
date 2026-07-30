@@ -11,16 +11,10 @@ BASE_PATH = os.path.join(
 # ======================
 # CHURN
 
+import joblib
+
 churn_model = joblib.load(
-    os.path.join(BASE_PATH,"churn_model.pkl")
-)
-
-churn_scaler = joblib.load(
-    os.path.join(BASE_PATH,"churn_scaler.pkl")
-)
-
-churn_features = joblib.load(
-    os.path.join(BASE_PATH,"churn_features.pkl")
+"models/churn_pipeline.pkl"
 )
 
 
