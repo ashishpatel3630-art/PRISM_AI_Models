@@ -50,22 +50,21 @@ segmentation_features = joblib.load(
 # CLV
 # ======================
 
+from pathlib import Path
+import joblib
+
+
+MODEL_DIR = Path("models")
+
+
 clv_model = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "clv_model.pkl"
-    )
-)
-
-clv_features = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "clv_features.pkl"
-    )
+    MODEL_DIR / "clv_model.pkl"
 )
 
 
-
+clv_pipeline = joblib.load(
+    MODEL_DIR / "clv_pipeline.pkl"
+)
 # ======================
 # FRAUD
 # ======================

@@ -1,12 +1,7 @@
 from fastapi import APIRouter
-import pandas as pd
+from typing import List
 
-
-from backend.services.model_loader import (
-    clv_model,
-    clv_features
-)
-
+from backend.services.model_loader import clv_pipeline
 
 
 router = APIRouter(
@@ -15,27 +10,15 @@ router = APIRouter(
 )
 
 
-
 @router.post("/predict")
-def predict(data:dict):
+def predict(data: List[float]):
 
 
-    df=pd.DataFrame(
+    prediction = clv_pipeline.predict(
         [data]
     )
 
 
-    df=df[clv_features]
-
-
-    prediction = clv_model.predict(
-        df
-    )[0]
-
-
     return {
-
-        "Customer_Lifetime_Value":
-        float(prediction)
-
+        "Predicted_CLV": float(prediction[0])
     }
