@@ -24,10 +24,10 @@ def predict(data: dict):
 
     return {
 
-        "prediction": int(prediction),
+        "prediction": (prediction),
 
         "churn_probability":
-        round(float(probability),3),
+        round((probability),3),
 
         "status":
         "Will Churn" if prediction==1 else "Safe Customer"

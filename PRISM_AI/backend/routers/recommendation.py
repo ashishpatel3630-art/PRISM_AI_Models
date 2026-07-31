@@ -23,17 +23,8 @@ if not os.path.exists(BASE_PATH):
 # ---------------- CHURN ----------------
 
 churn_model = joblib.load(
-    os.path.join(BASE_PATH,"churn_model.pkl")
+    os.path.join(BASE_PATH, "churn_pipeline.pkl")
 )
-
-churn_scaler = joblib.load(
-    os.path.join(BASE_PATH,"churn_scaler.pkl")
-)
-
-churn_features = joblib.load(
-    os.path.join(BASE_PATH,"churn_features.pkl")
-)
-
 
 
 # ---------------- SEGMENTATION ----------------
