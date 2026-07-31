@@ -123,26 +123,26 @@ user_product = joblib.load(
 # NEXT PURCHASE
 # ======================
 
+import joblib
+from pathlib import Path
+
+
+MODEL_DIR = Path("models")
+
+
 next_purchase_amount_model = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "next_purchase_amount_model.pkl"
-    )
+    MODEL_DIR / "next_purchase_amount_model.pkl"
 )
+
 
 next_purchase_amount_scaler = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "next_purchase_amount_scaler.pkl"
-    )
+    MODEL_DIR / "next_purchase_amount_scaler.pkl"
 )
+
 
 next_purchase_amount_features = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "next_purchase_amount_features.pkl"
-    )
+    MODEL_DIR / "next_purchase_amount_features.pkl"
 )
 
 
-print("🚀 All PRISM AI Models Loaded Successfully")
+print("Next Purchase Model Loaded ✅")
