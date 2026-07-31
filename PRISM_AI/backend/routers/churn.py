@@ -32,3 +32,15 @@ def predict(data: dict):
         "status":
         "Will Churn" if prediction==1 else "Safe Customer"
     }
+from fastapi import APIRouter
+
+router = APIRouter()
+
+
+@router.post("/churn/predict")
+def predict_churn(data:dict):
+
+    return {
+        "churn_probability":75,
+        "risk":"High Risk"
+    }
