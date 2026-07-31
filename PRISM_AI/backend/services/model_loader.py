@@ -96,26 +96,26 @@ fraud_features = joblib.load(
 # RECOMMENDATION
 # ======================
 
-products = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "products.pkl"
-    )
-)
+# products = joblib.load(
+#     os.path.join(
+#         BASE_PATH,
+#         "products.pkl"
+#     )
+# )
 
-recommendation_similarity = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "recommendation_similarity.pkl"
-    )
-)
+# recommendation_similarity = joblib.load(
+#     os.path.join(
+#         BASE_PATH,
+#         "recommendation_similarity.pkl"
+#     )
+# )
 
-user_product = joblib.load(
-    os.path.join(
-        BASE_PATH,
-        "user_product.pkl"
-    )
-)
+# user_product = joblib.load(
+#     os.path.join(
+#         BASE_PATH,
+#         "user_product.pkl"
+#     )
+# )
 
 
 

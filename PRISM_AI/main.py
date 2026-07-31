@@ -5,11 +5,11 @@ from backend.middleware.logging import LoggingMiddleware
 
 from backend.routers import (
     churn,
-    segmentation,
     clv,
     fraud,
-    recommendation,
+    segmentation,
     next_purchase,
+    # recommendation
 )
 
 
@@ -66,18 +66,22 @@ app.include_router(
     tags=["Fraud Detection"]
 )
 
-app.include_router(
-    recommendation.router,
-    prefix="/api/recommendation",
-    tags=["Recommendation Engine"]
-)
+# app.include_router(
+#     recommendation.router,
+#     prefix="/api/recommendation",
+#     tags=["Recommendation Engine"]
+# )
 
 app.include_router(
     next_purchase.router,
     prefix="/api/next-purchase",
     tags=["Next Purchase Prediction"]
 )
-
+# app.include_router(
+#     recommendation.router,
+#     prefix="/api/recommendation",
+#     tags=["Recommendation"]
+# )
 
 
 @app.get("/")
@@ -86,3 +90,62 @@ def home():
     return {
         "message": "PRISM AI Backend Running 🚀"
     }
+    
+from fastapi.middleware.cors import CORSMiddleware
+
+
+app.add_middleware(
+
+    CORSMiddleware,
+
+    allow_origins=[
+        "http://localhost:5174"
+    ],
+
+    allow_credentials=True,
+
+    allow_methods=["*"],
+
+    allow_headers=["*"],
+
+)
+
+from backend.routers import dashboard
+
+
+app.include_router(
+    dashboard.router,
+    prefix="/api/dashboard"
+)
+
+from backend.routers import (
+    dashboard,
+    revenue,
+    segmentation,
+    risk
+)
+
+
+
+app.include_router(
+    dashboard.router,
+    prefix="/api/dashboard"
+)
+
+
+app.include_router(
+    revenue.router,
+    prefix="/api/revenue"
+)
+
+
+app.include_router(
+    segmentation.router,
+    prefix="/api/segment"
+)
+
+
+app.include_router(
+    risk.router,
+    prefix="/api/risk"
+)

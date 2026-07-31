@@ -1,16 +1,47 @@
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import {
+ ResponsiveContainer,
+ AreaChart,
+ Area,
+ XAxis,
+ YAxis,
+ Tooltip,
+ CartesianGrid
+} from "recharts";
 
-const data = [
-  { month: 'Jan', revenue: 45000, projected: 48000 },
-  { month: 'Feb', revenue: 52000, projected: 55000 },
-  { month: 'Mar', revenue: 61000, projected: 64000 },
-  { month: 'Apr', revenue: 67000, projected: 72000 },
-  { month: 'May', revenue: 78000, projected: 85000 },
-  { month: 'Jun', revenue: 95000, projected: 102000 },
-];
 
-const RevenueChart = () => {
-  return (
+import {useEffect,useState} from "react";
+
+import API from "../api/axios";
+
+
+const RevenueChart =()=>{
+
+
+const [data,setData]=useState([]);
+
+
+
+useEffect(()=>{
+
+
+API.get("/revenue")
+
+.then(res=>{
+
+setData(res.data)
+
+})
+
+.catch(err=>{
+console.log(err)
+})
+
+
+},[])
+
+
+
+return (
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
