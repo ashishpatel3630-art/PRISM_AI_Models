@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
 import numpy as np
 
 from backend.services.model_loader import (
@@ -8,18 +9,20 @@ from backend.services.model_loader import (
 
 
 router = APIRouter(
-    prefix="/segmentation",
     tags=["Segmentation"]
 )
 
 
+class SegmentationInput(BaseModel):
+
+    features: list[float]
+
 
 @router.post("/predict")
-def predict(data:list):
-
+def predict(data: SegmentationInput):
 
     values = np.array(
-        [data]
+        [data.features]
     )
 
 
@@ -34,8 +37,5 @@ def predict(data:list):
 
 
     return {
-
-        "segment":
-        int(result[0])
-
+        "segment": int(result[0])
     }
