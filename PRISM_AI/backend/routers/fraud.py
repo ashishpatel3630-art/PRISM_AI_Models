@@ -1,55 +1,49 @@
 from fastapi import APIRouter
-import pandas as pd
+import numpy as np
 
-
-from backend.services.model_loader import(
-fraud_model,
-fraud_scaler,
-fraud_features
+from backend.services.model_loader import (
+    fraud_model,
+    fraud_scaler
 )
 
 
-router=APIRouter(
-prefix="/fraud",
-tags=["Fraud"]
+router = APIRouter(
+    prefix="/fraud",
+    tags=["Fraud"]
 )
 
 
+from typing import List
 
 @router.post("/predict")
-def predict(data:dict):
+def predict(data: List[float]):
 
-
-    df=pd.DataFrame(
+    values = np.array(
         [data]
     )
 
 
-    df=df[fraud_features]
-
-
-    scaled=fraud_scaler.transform(
-        df
+    scaled = fraud_scaler.transform(
+        values
     )
 
 
-    prediction=fraud_model.predict(
+    prediction = fraud_model.predict(
         scaled
-    )[0]
+    )
 
 
-    probability=fraud_model.predict_proba(
+    probability = fraud_model.predict_proba(
         scaled
-    )[0][1]
+    )
 
 
-    return{
+    return {
 
+        "Fraud Prediction":
+        int(prediction[0]),
 
-    "fraud":
-    int(prediction),
-
-    "risk_score":
-    float(probability)
+        "Fraud Probability":
+        float(probability[0][1])
 
     }
