@@ -66,22 +66,12 @@ app.include_router(
     tags=["Fraud Detection"]
 )
 
-# app.include_router(
-#     recommendation.router,
-#     prefix="/api/recommendation",
-#     tags=["Recommendation Engine"]
-# )
-
 app.include_router(
     next_purchase.router,
     prefix="/api/next-purchase",
     tags=["Next Purchase Prediction"]
 )
-# app.include_router(
-#     recommendation.router,
-#     prefix="/api/recommendation",
-#     tags=["Recommendation"]
-# )
+
 
 
 @app.get("/")
@@ -138,11 +128,6 @@ app.include_router(
     prefix="/api/revenue"
 )
 
-
-app.include_router(
-    segmentation.router,
-    prefix="/api/segment"
-)
 
 
 app.include_router(
