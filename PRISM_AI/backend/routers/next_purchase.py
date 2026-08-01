@@ -5,7 +5,6 @@ from backend.services.model_loader import next_purchase_amount_model
 
 
 router = APIRouter(
-    prefix="/next-purchase",
     tags=["Next Purchase"]
 )
 

@@ -69,10 +69,11 @@ app.include_router(
     fraud.router,
     prefix="/api/fraud"
 )
+
+
 app.include_router(
     next_purchase.router,
-    prefix="/api/next-purchase",
-    tags=["Next Purchase Prediction"]
+    prefix="/api/next-purchase"
 )
 
 

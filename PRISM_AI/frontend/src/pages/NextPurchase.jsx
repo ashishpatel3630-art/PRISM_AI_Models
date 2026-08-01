@@ -5,81 +5,103 @@ import GlassCard from "../components/GlassCard";
 import { ShoppingCart, Sparkles, TrendingUp } from "lucide-react";
 
 const NextPurchase = () => {
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [result, setResult] = useState(null);
+  const [formData, setFormData] = useState({
+    Age: "",
+    Gender: "Male",
+    Income: "",
+    Location: "Bhopal",
+    Membership: "Gold",
+
+    Tenure: "",
+    TotalSpend: "",
+    TotalTransactions: "",
+    AverageOrderValue: "",
+    PurchaseFrequency: "",
+    LastPurchaseDays: "",
+
+    PreferredCategory: "Electronics",
+
+    WebsiteVisits: "",
+    AppUsageMinutes: "",
+    LoginFrequency: "",
+    WishlistCount: "",
+
+    CartAbandonmentRate: "",
+    EmailOpenRate: "",
+    MarketingClicks: "",
+
+    SatisfactionScore: "",
+    Rating: "",
+
+    SupportCalls: "",
+    Complaints: "",
+    Reviews: "",
+
+    CustomerHealthScore: "",
+    ChurnRisk: "",
+
+    DiscountUsed: "",
+    CouponUsed: "",
+
+    ReferralCount: "",
+
+    PaymentMethod: "Card",
+    DeviceType: "Mobile",
+
+    ReturnRate: "",
+    LoyaltyPoints: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const predictPurchase = async () => {
     try {
       setLoading(true);
 
-      const response = await API.post("/next-purchase/predict", {
-        Age: 35,
+      const response = await API.post(
+        "/next-purchase/predict",
 
-        Gender: "Male",
+        {
+          ...formData,
 
-        Income: 80000,
-
-        Location: "California",
-
-        Membership: "Gold",
-
-        Tenure: 24,
-
-        TotalSpend: 50000,
-
-        TotalTransactions: 40,
-
-        AverageOrderValue: 1200,
-
-        PurchaseFrequency: 8,
-
-        LastPurchaseDays: 20,
-
-        PreferredCategory: "Electronics",
-
-        WebsiteVisits: 50,
-
-        AppUsageMinutes: 300,
-
-        LoginFrequency: 40,
-
-        WishlistCount: 10,
-
-        CartAbandonmentRate: 0.2,
-
-        EmailOpenRate: 0.8,
-
-        MarketingClicks: 15,
-
-        SatisfactionScore: 9,
-
-        Rating: 5,
-
-        SupportCalls: 2,
-
-        Complaints: 1,
-
-        Reviews: 20,
-
-        CustomerHealthScore: 90,
-
-        ChurnRisk: 0,
-
-        DiscountUsed: 5,
-
-        CouponUsed: 2,
-
-        ReferralCount: 3,
-
-        PaymentMethod: "Credit Card",
-
-        DeviceType: "Mobile",
-
-        ReturnRate: 0.05,
-
-        LoyaltyPoints: 5000,
-      });
+          Age: Number(formData.Age),
+          Income: Number(formData.Income),
+          Tenure: Number(formData.Tenure),
+          TotalSpend: Number(formData.TotalSpend),
+          TotalTransactions: Number(formData.TotalTransactions),
+          AverageOrderValue: Number(formData.AverageOrderValue),
+          PurchaseFrequency: Number(formData.PurchaseFrequency),
+          LastPurchaseDays: Number(formData.LastPurchaseDays),
+          WebsiteVisits: Number(formData.WebsiteVisits),
+          AppUsageMinutes: Number(formData.AppUsageMinutes),
+          LoginFrequency: Number(formData.LoginFrequency),
+          WishlistCount: Number(formData.WishlistCount),
+          CartAbandonmentRate: Number(formData.CartAbandonmentRate),
+          EmailOpenRate: Number(formData.EmailOpenRate),
+          MarketingClicks: Number(formData.MarketingClicks),
+          SatisfactionScore: Number(formData.SatisfactionScore),
+          Rating: Number(formData.Rating),
+          SupportCalls: Number(formData.SupportCalls),
+          Complaints: Number(formData.Complaints),
+          Reviews: Number(formData.Reviews),
+          CustomerHealthScore: Number(formData.CustomerHealthScore),
+          ChurnRisk: Number(formData.ChurnRisk),
+          DiscountUsed: Number(formData.DiscountUsed),
+          CouponUsed: Number(formData.CouponUsed),
+          ReferralCount: Number(formData.ReferralCount),
+          ReturnRate: Number(formData.ReturnRate),
+          LoyaltyPoints: Number(formData.LoyaltyPoints),
+        },
+      );
 
       setResult(response.data);
     } catch (error) {
@@ -89,6 +111,8 @@ const NextPurchase = () => {
     }
   };
 
+  const fields = Object.keys(formData);
+
   return (
     <div className="space-y-8">
       <div>
@@ -97,27 +121,8 @@ const NextPurchase = () => {
         </h1>
 
         <p className="text-slate-400">
-          AI predicts customer's next purchase value and buying behavior.
+          AI predicts customer's next expected purchase amount.
         </p>
-
-        <button
-          onClick={predictPurchase}
-          className="
-mt-5
-px-6
-py-3
-rounded-xl
-bg-gradient-to-r
-from-cyan-500
-to-purple-600
-text-white
-font-bold
-hover:scale-105
-transition
-"
-        >
-          {loading ? "Predicting..." : "Predict Next Purchase 🚀"}
-        </button>
       </div>
 
       {result && (
@@ -130,46 +135,87 @@ transition
             </h2>
           </div>
 
-          <div className="mt-5">
-            <p className="text-slate-400">Expected Next Purchase Amount</p>
+          <h3 className="text-4xl font-bold text-cyan-400 mt-5">
+            ${Number(result["Next Purchase Amount"]).toFixed(2)}
+          </h3>
 
-            <h1
-              className="
-text-4xl
-font-bold
-text-cyan-400
-mt-2
-"
-            >
-              ${result["Predicted Next Purchase Amount"]}
-            </h1>
-          </div>
+          <p className="text-slate-400 mt-2">
+            Predicted future customer spending
+          </p>
         </GlassCard>
       )}
 
-      <div className="grid md:grid-cols-3 gap-5">
-        <GlassCard>
+      <GlassCard>
+        <h2 className="text-lg font-semibold text-white mb-5">
+          Customer Behavior Input
+        </h2>
+
+        <div className="grid md:grid-cols-4 gap-4">
+          {fields.map((field) => (
+            <div key={field}>
+              <label className="text-xs text-slate-400">{field}</label>
+
+              <input
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                className="
+w-full
+mt-2
+p-3
+rounded-xl
+bg-black/40
+border
+border-white/20
+text-white
+"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={predictPurchase}
+          disabled={loading}
+          className="
+mt-6
+w-full
+py-4
+rounded-xl
+bg-gradient-to-r
+from-cyan-500
+to-purple-600
+text-white
+font-bold
+"
+        >
+          {loading ? "Predicting..." : "Predict Next Purchase 🚀"}
+        </button>
+      </GlassCard>
+
+      <GlassCard>
+        <div className="flex gap-3 items-center">
           <ShoppingCart className="text-purple-400" />
 
-          <p className="text-slate-400 mt-3">Prediction Window</p>
+          <h2 className="text-lg font-semibold text-white">
+            Purchase Intelligence
+          </h2>
+        </div>
 
-          <h2 className="text-2xl font-bold text-white">30 Days</h2>
-        </GlassCard>
+        <div className="mt-5 grid md:grid-cols-2 gap-5">
+          <div>
+            <p className="text-slate-400 text-sm">Customer Value Trend</p>
 
-        <GlassCard>
-          <TrendingUp className="text-green-400" />
+            <p className="text-white font-bold text-xl">Growing Customer 📈</p>
+          </div>
 
-          <p className="text-slate-400 mt-3">Customer Intent</p>
+          <div>
+            <p className="text-slate-400 text-sm">Prediction Model</p>
 
-          <h2 className="text-2xl font-bold text-white">High</h2>
-        </GlassCard>
-
-        <GlassCard>
-          <p className="text-slate-400">AI Confidence</p>
-
-          <h2 className="text-2xl font-bold text-cyan-400">92%</h2>
-        </GlassCard>
-      </div>
+            <p className="text-white font-bold text-xl">AI Regression Model</p>
+          </div>
+        </div>
+      </GlassCard>
     </div>
   );
 };

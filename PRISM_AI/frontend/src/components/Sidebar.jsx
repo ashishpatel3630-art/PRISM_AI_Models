@@ -18,7 +18,7 @@ const navItems = [
   { name: 'Churn Prediction', path: '/churn', icon: TrendingDown },
   { name: 'Segmentation', path: '/segmentation', icon: PieChart },
   { name: 'Lifetime Value', path: '/clv', icon: DollarSign },
-  { name: 'Recommendations', path: '/recommendations', icon: Sparkles },
+  // { name: 'Recommendations', path: '/recommendations', icon: Sparkles },
   { name: 'Next Purchase', path: '/next-purchase', icon: ShoppingCart },
   { name: 'Fraud Detection', path: '/fraud', icon: ShieldAlert },
 ];
