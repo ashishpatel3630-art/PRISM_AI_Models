@@ -34,7 +34,7 @@ const Segmentation = () => {
 
   const predictSegment = async () => {
     try {
-      const res = await API.post("/segmentation/predict", formData);
+      const res = await API.post("/api/segmentation/predict", formData);
 
       setResult(res.data);
     } catch (error) {

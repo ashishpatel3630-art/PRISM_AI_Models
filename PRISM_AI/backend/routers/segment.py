@@ -4,7 +4,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/segment")
+@router.get("/api/dashboard/segment")
 def get_segment():
 
     return [

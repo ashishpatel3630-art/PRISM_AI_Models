@@ -102,7 +102,7 @@ const Fraud = () => {
       setLoading(true);
 
       const response = await API.post(
-        "/fraud/predict",
+        "/api/fraud/predict",
 
         {
           ...formData,

@@ -3,7 +3,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/insights")
+@router.get("/api/dashboard/insights")
 def get_insights():
 
     return [

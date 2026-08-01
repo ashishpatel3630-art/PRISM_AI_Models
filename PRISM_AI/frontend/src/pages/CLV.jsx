@@ -40,13 +40,9 @@ const CLV = () => {
     try {
       setLoading(true);
 
-      const response = await API.post(
-        "/clv/predict",
-
-        {
-          Income: Number(formData.Income),
-
-          Tenure: Number(formData.Tenure),
+      const response = await API.post("/api/clv/predict", {
+        Income: Number(formData.Income),
+        Tenure: Number(formData.Tenure),
 
           TotalSpend: Number(formData.TotalSpend),
 

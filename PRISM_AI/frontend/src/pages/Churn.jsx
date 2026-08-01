@@ -46,8 +46,7 @@ const ChurnPredict = () => {
     try {
       setLoading(true);
 
-      const res = await API.post("/churn/predict", formData);
-
+      const res = await API.post("/api/churn/predict", formData)
       setResult(res.data);
     } catch (error) {
       console.log(error);

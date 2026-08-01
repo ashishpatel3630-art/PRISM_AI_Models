@@ -71,7 +71,7 @@ const NextPurchase = () => {
       setLoading(true);
 
       const response = await API.post(
-        "/next-purchase/predict",
+        "/api/next-purchase/predict",
 
         {
           ...formData,
