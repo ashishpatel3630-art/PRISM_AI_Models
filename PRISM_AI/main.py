@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.middleware.logging import LoggingMiddleware
-
+from backend.routers import segment
 from backend.routers import (
     churn,
     clv,
@@ -148,4 +148,16 @@ app.include_router(
 app.include_router(
     risk.router,
     prefix="/api/risk"
+)
+
+app.include_router(
+    segment.router,
+    prefix="/api"
+)
+
+from backend.routers import insights
+
+app.include_router(
+    insights.router,
+    prefix="/api"
 )

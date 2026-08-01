@@ -19,7 +19,6 @@ function App() {
           <Route path="/churn" element={<Churn />} />
           <Route path="/segmentation" element={<Segmentation />} />
           <Route path="/clv" element={<CLV />} />
-     
           <Route path="/next-purchase" element={<NextPurchase />} />
           <Route path="/fraud" element={<Fraud />} />
         </Routes>

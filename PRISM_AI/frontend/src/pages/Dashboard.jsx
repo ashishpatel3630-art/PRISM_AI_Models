@@ -25,7 +25,14 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+useEffect(()=>{
 
+API.get("/insights")
+.then(res=>{
+setInsights(res.data)
+})
+
+},[])
   return (
     <div>
       {/* Hero Welcome */}

@@ -1,101 +1,353 @@
-import GlassCard from '../components/GlassCard';
-import RiskChart from '../charts/RiskChart';
-import { AlertTriangle, TrendingDown, ArrowUpRight, ShieldAlert, } from 'lucide-react';
+import { useState } from "react";
+import API from "../api/axios";
+import { ShieldAlert, CheckCircle, TrendingDown, Loader2 } from "lucide-react";
 
-const Churn = () => {
-  const atRiskCustomers = [
-    { id: 'CUST-1092', name: 'Acme Corp', riskScore: '92%', healthScore: 32, ltv: '$48,000', factor: 'Drop in Usage (75%)' },
-    { id: 'CUST-2410', name: 'Starlight Media', riskScore: '88%', healthScore: 41, ltv: '$32,500', factor: '3 Open Support Tickets' },
-    { id: 'CUST-3891', name: 'Nexus Tech', riskScore: '84%', healthScore: 45, ltv: '$89,000', factor: 'Payment Decline' },
-    { id: 'CUST-4102', name: 'Global Logistics', riskScore: '79%', healthScore: 49, ltv: '$12,000', factor: 'No Admin Logins (30d)' },
+const ChurnPredict = () => {
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    Age: "",
+    Gender: "",
+    Income: "",
+    Location: "",
+    Membership: "",
+    Tenure: "",
+    TotalSpend: "",
+    TotalTransactions: "",
+    AverageOrderValue: "",
+    PurchaseFrequency: "",
+    LastPurchaseDays: "",
+    PreferredCategory: "",
+    WebsiteVisits: "",
+    AppUsageMinutes: "",
+    LoginFrequency: "",
+    WishlistCount: "",
+    CartAbandonmentRate: "",
+    MarketingClicks: "",
+    SatisfactionScore: "",
+    Rating: "",
+    SupportCalls: "",
+    Complaints: "",
+    Reviews: "",
+    CustomerHealthScore: "",
+  });
+
+  const [result, setResult] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const predictChurn = async () => {
+    try {
+      setLoading(true);
+
+      const res = await API.post("/churn/predict", formData);
+
+      setResult(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const numericFields = [
+    "Age",
+    "Income",
+    "Tenure",
+    "TotalSpend",
+    "TotalTransactions",
+    "AverageOrderValue",
+    "PurchaseFrequency",
+    "LastPurchaseDays",
+    "WebsiteVisits",
+    "AppUsageMinutes",
+    "LoginFrequency",
+    "WishlistCount",
+    "CartAbandonmentRate",
+    "MarketingClicks",
+    "SupportCalls",
+    "Complaints",
+    "Reviews",
   ];
 
+  const dropdowns = {
+    Gender: ["Male", "Female"],
+
+    Membership: ["Free", "Bronze", "Silver", "Gold", "Platinum"],
+
+    Location: ["California", "Texas", "New York", "Florida"],
+
+    PreferredCategory: ["Electronics", "Fashion", "Beauty", "Sports"],
+  };
+
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-white">Churn Prediction & Prevention</h1>
-        <p className="text-sm text-slate-400">ML-driven early warning system for customer retention.</p>
-      </div>
+    <div
+      className="
+min-h-screen
+bg-gradient-to-br
+from-[#0f172a]
+via-purple-950
+to-black
+p-8
+"
+    >
+      <div
+        className="
+max-w-6xl
+mx-auto
+bg-white/10
+backdrop-blur-xl
+border
+border-white/20
+rounded-3xl
+p-8
+shadow-2xl
+"
+      >
+        <h1
+          className="
+text-4xl
+font-bold
+text-white
+mb-2
+flex
+items-center
+gap-3
+"
+        >
+          <ShieldAlert className="text-purple-400" />
+          Customer Churn Prediction AI
+        </h1>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        <GlassCard>
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-slate-400">Predicted Monthly Churn</p>
-            <span className="p-2 rounded-lg bg-rose-500/10 text-rose-400"><TrendingDown className="h-4 w-4" /></span>
-          </div>
-          <h3 className="text-2xl font-bold text-white mt-2">2.4%</h3>
-          <p className="text-xs text-emerald-400 mt-1">-0.5% vs last month</p>
-        </GlassCard>
+        <p
+          className="
+text-gray-400
+mb-8
+"
+        >
+          Predict customer risk using Machine Learning
+        </p>
 
-        <GlassCard>
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-slate-400">Revenue at Risk</p>
-            <span className="p-2 rounded-lg bg-amber-500/10 text-amber-400"><AlertTriangle className="h-4 w-4" /></span>
-          </div>
-          <h3 className="text-2xl font-bold text-white mt-2">$181,500</h3>
-          <p className="text-xs text-slate-400 mt-1">Across 142 enterprise accounts</p>
-        </GlassCard>
+        <div
+          className="
+grid
+md:grid-cols-2
+gap-6
+"
+        >
+          {numericFields.map((field) => (
+            <div key={field}>
+              <label
+                className="
+text-gray-300
+text-sm
+"
+              >
+                {field}
+              </label>
 
-        <GlassCard>
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-slate-400">Churn Recovered (30d)</p>
-            <span className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400"><ShieldAlert className="h-4 w-4" /></span>
-          </div>
-          <h3 className="text-2xl font-bold text-white mt-2">$94,200</h3>
-          <p className="text-xs text-cyan-400 mt-1">Via automated AI plays</p>
-        </GlassCard>
-      </div>
+              <input
+                type="number"
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                placeholder={`Enter ${field}`}
+                className="
+w-full
+mt-2
+p-3
+rounded-xl
+bg-black/40
+text-white
+border
+border-white/20
+focus:ring-2
+focus:ring-purple-500
+outline-none
+"
+              />
+            </div>
+          ))}
 
-      {/* Risk Distribution & Table */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <GlassCard className="lg:col-span-1">
-          <h2 className="text-lg font-semibold text-slate-100 mb-4">Risk Severity Distribution</h2>
-          <RiskChart />
-        </GlassCard>
+          {Object.keys(dropdowns).map((field) => (
+            <div key={field}>
+              <label
+                className="
+text-gray-300
+text-sm
+"
+              >
+                {field}
+              </label>
 
-        <GlassCard className="lg:col-span-2">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-slate-100">Top High-Risk Accounts</h2>
-            <button className="text-xs text-cyan-400 hover:underline flex items-center gap-1">
-              View All <ArrowUpRight className="h-3 w-3" />
-            </button>
-          </div>
+              <select
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                className="
+w-full
+mt-2
+p-3
+rounded-xl
+bg-black/40
+text-white
+border
+border-white/20
+"
+              >
+                <option value="">Select {field}</option>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="border-b border-slate-800 text-slate-400 uppercase text-[10px]">
-                <tr>
-                  <th className="py-3 px-2">Account</th>
-                  <th className="py-3 px-2">Churn Risk</th>
-                  <th className="py-3 px-2">Health Score</th>
-                  <th className="py-3 px-2">Contract LTV</th>
-                  <th className="py-3 px-2">Primary Risk Driver</th>
-                  <th className="py-3 px-2 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/50">
-                {atRiskCustomers.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-800/30">
-                    <td className="py-3 px-2 font-medium text-white">{c.name}</td>
-                    <td className="py-3 px-2"><span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">{c.riskScore}</span></td>
-                    <td className="py-3 px-2">{c.healthScore}/100</td>
-                    <td className="py-3 px-2 font-semibold text-slate-200">{c.ltv}</td>
-                    <td className="py-3 px-2 text-slate-400">{c.factor}</td>
-                    <td className="py-3 px-2 text-right">
-                      <button className="rounded bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 px-2.5 py-1 text-[11px] font-medium border border-cyan-500/30">
-                        Engage
-                      </button>
-                    </td>
-                  </tr>
+                {dropdowns[field].map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
                 ))}
-              </tbody>
-            </table>
+              </select>
+            </div>
+          ))}
+        </div>
+
+        {/* Scores */}
+
+        <div
+          className="
+grid
+md:grid-cols-3
+gap-6
+mt-8
+"
+        >
+          {["SatisfactionScore", "Rating", "CustomerHealthScore"].map(
+            (field) => (
+              <div key={field}>
+                <label
+                  className="
+text-gray-300
+"
+                >
+                  {field}
+                </label>
+
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="
+w-full
+mt-3
+accent-purple-500
+"
+                />
+
+                <p
+                  className="
+text-white
+text-center
+"
+                >
+                  {formData[field] || 0}
+                </p>
+              </div>
+            ),
+          )}
+        </div>
+
+        <button
+          onClick={predictChurn}
+          disabled={loading}
+          className="
+mt-10
+w-full
+py-4
+rounded-xl
+bg-gradient-to-r
+from-purple-600
+to-pink-600
+text-white
+font-bold
+text-lg
+hover:scale-105
+transition
+flex
+justify-center
+items-center
+gap-3
+"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Predicting...
+            </>
+          ) : (
+            "Predict Customer Risk 🚀"
+          )}
+        </button>
+
+        {result && (
+          <div
+            className="
+mt-8
+p-6
+rounded-2xl
+bg-black/40
+border
+border-white/20
+text-white
+"
+          >
+            <h2
+              className="
+text-2xl
+font-bold
+mb-4
+"
+            >
+              Prediction Result
+            </h2>
+
+            <div className="flex gap-3 items-center">
+              {result.prediction === 1 ? (
+                <ShieldAlert className="text-red-500" />
+              ) : (
+                <CheckCircle className="text-green-500" />
+              )}
+
+              <span
+                className="
+text-xl
+font-bold
+"
+              >
+                {result.status}
+              </span>
+            </div>
+
+            <div
+              className="
+mt-4
+text-lg
+"
+            >
+              Churn Probability :
+              <span className="font-bold text-purple-400">
+                {(result.churn_probability * 100).toFixed(2)}%
+              </span>
+            </div>
           </div>
-        </GlassCard>
+        )}
       </div>
     </div>
   );
 };
 
-export default Churn;
+export default ChurnPredict;
