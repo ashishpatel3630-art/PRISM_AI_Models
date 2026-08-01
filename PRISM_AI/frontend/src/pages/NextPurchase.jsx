@@ -2,7 +2,10 @@ import { useState } from "react";
 import API from "../api/axios";
 
 import GlassCard from "../components/GlassCard";
-import { ShoppingCart, Sparkles, TrendingUp } from "lucide-react";
+import { ShoppingCart, Sparkles, 
+    // TrendingUp
+
+ } from "lucide-react";
 
 const NextPurchase = () => {
   const [result, setResult] = useState(null);

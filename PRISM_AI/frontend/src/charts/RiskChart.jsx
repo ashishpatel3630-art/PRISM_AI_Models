@@ -1,90 +1,216 @@
-import { 
-  ResponsiveContainer, 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  Tooltip 
+import React from "react";
+
+
+import {
+
+ResponsiveContainer,
+
+BarChart,
+
+Bar,
+
+XAxis,
+
+YAxis,
+
+Tooltip,
+
+CartesianGrid,
+
+Cell
+
 } from "recharts";
 
-import {useEffect,useState} from "react";
-import API from "../api/axios";
 
 
-const RiskChart = () => {
+const COLORS={
 
+Low:"#06b6d4",
 
-  const [risk,setRisk] = useState([]);
+Medium:"#f59e0b",
 
-
-  useEffect(()=>{
-
-    API.get("/risk")
-    .then(res=>{
-
-      setRisk(res.data);
-
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-
-
-  },[]);
-
-
-
-  return (
-
-    <div className="h-64 w-full">
-
-      <ResponsiveContainer width="100%" height="100%">
-
-        <BarChart data={risk}>
-
-          <XAxis 
-            dataKey="risk"
-            stroke="#64748b"
-            fontSize={12}
-            tickLine={false}
-          />
-
-
-          <YAxis
-            stroke="#64748b"
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-
-
-          <Tooltip 
-            contentStyle={{
-              backgroundColor:"#0f172a",
-              borderColor:"#334155",
-              borderRadius:"12px"
-            }}
-          />
-
-
-          <Bar 
-            dataKey="count"
-            fill="#a855f7"
-            radius={[8,8,0,0]}
-          />
-
-
-        </BarChart>
-
-
-      </ResponsiveContainer>
-
-
-    </div>
-
-  )
+High:"#f43f5e"
 
 }
 
 
-export default RiskChart;
+
+const CustomTooltip=({active,payload})=>{
+
+
+if(active && payload && payload.length){
+
+
+return (
+
+<div className="
+bg-slate-900
+border
+border-slate-700
+rounded-xl
+p-3
+text-white
+">
+
+
+<p>
+
+{payload[0].payload.risk}
+
+</p>
+
+
+<p className="text-cyan-400">
+
+Count : {payload[0].value}
+
+</p>
+
+
+</div>
+
+)
+
+
+}
+
+
+return null;
+
+
+}
+
+
+
+
+const RiskChart = ({risk=[]})=>{
+
+
+if(!risk.length){
+
+
+return (
+
+<div className="h-64 flex items-center justify-center text-slate-400">
+
+No Risk Data
+
+</div>
+
+)
+
+}
+
+
+
+return (
+
+<div className="h-72 w-full">
+
+
+<ResponsiveContainer width="100%" height="100%">
+
+
+<BarChart
+
+data={risk}
+
+margin={{
+
+top:10,
+
+right:10,
+
+left:-20,
+
+bottom:5
+
+}}
+
+>
+
+
+<CartesianGrid
+
+strokeDasharray="3 3"
+
+stroke="#1e293b"
+
+/>
+
+
+
+<XAxis
+
+dataKey="risk"
+
+stroke="#94a3b8"
+
+/>
+
+
+
+<YAxis
+
+stroke="#94a3b8"
+
+/>
+
+
+
+<Tooltip
+
+content={<CustomTooltip/>}
+
+/>
+
+
+
+<Bar
+
+dataKey="count"
+
+radius={[10,10,0,0]}
+
+>
+
+
+{
+
+risk.map((item,index)=>(
+
+
+<Cell
+
+key={index}
+
+fill={COLORS[item.risk] || "#8b5cf6"}
+
+/>
+
+
+))
+
+}
+
+
+
+</Bar>
+
+
+
+</BarChart>
+
+
+</ResponsiveContainer>
+
+
+</div>
+
+)
+
+}
+
+
+
+export default React.memo(RiskChart);

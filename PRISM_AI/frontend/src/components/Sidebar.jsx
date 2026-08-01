@@ -5,7 +5,7 @@ import {
   TrendingDown,
   PieChart,
   DollarSign,
-  Sparkles,
+  // Sparkles,
   ShieldAlert,
   ShoppingCart,
   Settings,
@@ -21,6 +21,7 @@ const navItems = [
   // { name: 'Recommendations', path: '/recommendations', icon: Sparkles },
   { name: 'Next Purchase', path: '/next-purchase', icon: ShoppingCart },
   { name: 'Fraud Detection', path: '/fraud', icon: ShieldAlert },
+
 ];
 
 const Sidebar = () => {

@@ -150,3 +150,7 @@ app.include_router(
     insights.router,
     prefix="/api"
 )
+from backend.routers import auth
+
+
+app.include_router(auth.router)

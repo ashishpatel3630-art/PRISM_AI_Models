@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DashboardLayout from './layout/DashboardLayout';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DashboardLayout from "./layout/DashboardLayout";
 
-import Dashboard from './pages/Dashboard';
-import Churn from './pages/Churn';
-import Segmentation from './pages/Segmentation';
-import CLV from './pages/CLV';
+import Dashboard from "./pages/Dashboard";
+import Churn from "./pages/Churn";
+import Segmentation from "./pages/Segmentation";
+import CLV from "./pages/CLV";
 
-import NextPurchase from './pages/NextPurchase';
-import Fraud from './pages/Fraud';
+import NextPurchase from "./pages/NextPurchase";
+import Fraud from "./pages/Fraud";
 
 function App() {
   return (
@@ -21,6 +21,8 @@ function App() {
           <Route path="/clv" element={<CLV />} />
           <Route path="/next-purchase" element={<NextPurchase />} />
           <Route path="/fraud" element={<Fraud />} />
+          import Customer360 from "./pages/Customer360";
+
         </Routes>
       </DashboardLayout>
     </Router>

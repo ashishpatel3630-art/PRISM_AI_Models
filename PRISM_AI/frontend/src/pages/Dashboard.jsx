@@ -1,14 +1,70 @@
+import
+ React
+ 
+, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+import {
+  Sparkles,
+  // TrendingUp,
+  // Users,
+  // AlertTriangle,
+  RefreshCw,
+} from "lucide-react";
+
 import GlassCard from "../components/GlassCard";
+
 import RevenueChart from "../charts/RevenueChart";
 import SegmentChart from "../charts/SegmentChart";
 import RiskChart from "../charts/RiskChart";
 
-import { useEffect, useState } from "react";
 import API from "../api/axios";
 
-import { Sparkles, TrendingUp, Users, AlertTriangle } from "lucide-react";
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+
+  visible: {
+    opacity: 1,
+
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+
+  visible: {
+    opacity: 1,
+
+    y: 0,
+
+    transition: {
+      duration: 0.4,
+    },
+  },
+};
+
+const Skeleton = ({ className = "" }) => (
+  <div
+    className={`
+animate-pulse
+rounded-xl
+bg-slate-800/70
+${className}
+`}
+  />
+);
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
+
   const [stats, setStats] = useState({
     customers: 0,
     health: 0,
@@ -16,158 +72,337 @@ const Dashboard = () => {
     revenue: 0,
   });
 
+  const [segments, setSegments] = useState([]);
+
+  const [riskData, setRiskData] = useState([]);
+
+  const [insights, setInsights] = useState([]);
+
+  const [revenue, setRevenue] = useState([]);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+
+      const [statsRes, insightsRes, revenueRes, segmentRes, riskRes] =
+        await Promise.all([
+          API.get("/dashboard"),
+
+          API.get("/insights"),
+
+          API.get("/revenue"),
+
+          API.get("/segment"),
+
+          API.get("/risk"),
+        ]);
+
+      setStats(statsRes.data || {});
+
+      setInsights(insightsRes.data || []);
+
+      setRevenue(revenueRes.data || []);
+
+      setSegments(segmentRes.data || []);
+
+      setRiskData(riskRes.data || []);
+    } catch (error) {
+      console.log("Dashboard Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    API.get("/dashboard")
-      .then((res) => {
-        setStats(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchDashboardData();
   }, []);
-useEffect(()=>{
 
-API.get("/insights")
-.then(res=>{
-setInsights(res.data)
-})
-
-},[])
   return (
-    <div>
-      {/* Hero Welcome */}
-      <h1 className="text-6xl text-white ">Good Morning, Ashish </h1>
-      <br></br>
-      <h3 className="text-4xl text-white mb-10">AI-powered customer intelligence at your
-      fingertips.</h3>
-      {/* Metric Cards */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <GlassCard>
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-xs text-slate-400 font-medium">
-                Total Customers
-              </p>
+    <motion.div
+      className="space-y-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* HERO */}
 
-              <h3 className="text-2xl font-bold text-white mt-1">
-                {stats.customers.toLocaleString()}
-              </h3>
-            </div>
+      <motion.div
+        variants={itemVariants}
+        className="
+flex
+justify-between
+items-center
+"
+      >
+        <div>
+          <h1
+            className="
+text-2xl
+font-bold
+text-white
+"
+          >
+            Good Morning, Ashish 👋
+          </h1>
 
-            <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
-              <Users className="h-5 w-5" />
-            </div>
-          </div>
-
-          <p className="mt-3 text-xs text-emerald-400 flex items-center gap-1">
-            <TrendingUp className="h-3 w-3" />
-            +5.2% from last month
+          <p
+            className="
+text-sm
+text-slate-400
+mt-2
+"
+          >
+            AI-powered customer intelligence and real-time updates.
           </p>
+        </div>
+
+        <button
+          onClick={fetchDashboardData}
+          className="
+flex
+items-center
+gap-2
+px-4
+py-2
+rounded-xl
+bg-slate-900
+border
+border-slate-700
+text-white
+text-sm
+hover:border-cyan-400
+transition
+"
+        >
+          <RefreshCw
+            className={`
+h-4
+w-4
+${loading ? "animate-spin" : ""}
+`}
+          />
+          Refresh
+        </button>
+      </motion.div>
+
+      {/* STATS */}
+
+      <motion.div
+        variants={itemVariants}
+        className="
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-4
+gap-5
+"
+      >
+        <GlassCard>
+          {loading ? (
+            <Skeleton className="h-20" />
+          ) : (
+            <div>
+              <p className="text-xs text-slate-400">Total Customers</p>
+
+              <h2
+                className="
+text-3xl
+font-bold
+text-white
+mt-2
+"
+              >
+                {(stats.customers || 0).toLocaleString()}
+              </h2>
+            </div>
+          )}
         </GlassCard>
 
         <GlassCard>
-          <div className="flex justify-between items-start">
+          {loading ? (
+            <Skeleton className="h-20" />
+          ) : (
             <div>
-              <p className="text-xs text-slate-400 font-medium">
-                Avg Health Score
-              </p>
+              <p className="text-xs text-slate-400">Average Health Score</p>
 
-              <h3 className="text-2xl font-bold text-white mt-1">
-                {stats.health}/100
-              </h3>
+              <h2
+                className="
+text-3xl
+font-bold
+text-emerald-400
+mt-2
+"
+              >
+                {stats.health || 0}/100
+              </h2>
             </div>
-
-            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-              <Sparkles className="h-5 w-5" />
-            </div>
-          </div>
+          )}
         </GlassCard>
 
         <GlassCard>
-          <div className="flex justify-between items-start">
+          {loading ? (
+            <Skeleton className="h-20" />
+          ) : (
             <div>
-              <p className="text-xs text-slate-400 font-medium">
-                High Risk Customers
-              </p>
+              <p className="text-xs text-slate-400">High Risk Customers</p>
 
-              <h3 className="text-2xl font-bold text-white mt-1">
-                {stats.risk.toLocaleString()}
-              </h3>
+              <h2
+                className="
+text-3xl
+font-bold
+text-rose-400
+mt-2
+"
+              >
+                {(stats.risk || 0).toLocaleString()}
+              </h2>
             </div>
-
-            <div className="p-2 rounded-lg bg-rose-500/10 text-rose-400">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
-          </div>
+          )}
         </GlassCard>
 
         <GlassCard>
-          <div className="flex justify-between items-start">
+          {loading ? (
+            <Skeleton className="h-20" />
+          ) : (
             <div>
-              <p className="text-xs text-slate-400 font-medium">
-                Predicted Revenue
-              </p>
+              <p className="text-xs text-slate-400">Predicted Revenue</p>
 
-              <h3 className="text-2xl font-bold text-white mt-1">
-                ${stats.revenue}M
-              </h3>
+              <h2
+                className="
+text-3xl
+font-bold
+text-purple-400
+mt-2
+"
+              >
+                ${stats.revenue || 0}M
+              </h2>
             </div>
-
-            <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
-              <TrendingUp className="h-5 w-5" />
-            </div>
-          </div>
+          )}
         </GlassCard>
-      </div>
-      {/* Main Charts Row */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      </motion.div>
+
+      {/* MAIN SECTION */}
+
+      <motion.div
+        variants={itemVariants}
+        className="
+grid
+grid-cols-1
+lg:grid-cols-3
+gap-6
+"
+      >
         <GlassCard className="lg:col-span-2">
-          <h2 className="text-lg font-semibold text-slate-100 mb-4">
-            Revenue & Growth Forecast
+          <h2
+            className="
+text-lg
+font-semibold
+text-white
+mb-4
+"
+          >
+            Revenue Growth Forecast
           </h2>
 
-          <RevenueChart />
+          {loading ? (
+            <Skeleton className="h-72" />
+          ) : (
+            <RevenueChart data={revenue} />
+          )}
         </GlassCard>
 
-        <GlassCard className="bg-gradient-to-b from-purple-900/20 to-cyan-900/10 border-cyan-500/20">
-          <div className="flex items-center gap-2 mb-4 text-cyan-400 font-semibold">
-            <Sparkles className="h-5 w-5" />
-
-            <span>AI Insights Engine</span>
+        <GlassCard>
+          <div
+            className="
+flex
+items-center
+gap-2
+text-cyan-400
+font-semibold
+mb-4
+"
+          >
+            <Sparkles size={18} />
+            AI Insights Engine
           </div>
 
-          <ul className="space-y-4 text-xs text-slate-300">
-            <li className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              ⚡ <strong className="text-white">High Churn Risk:</strong>
-              245 enterprise customers showed a drop in activity.
-            </li>
+          {loading ? (
+            <Skeleton className="h-72" />
+          ) : (
+            <ul className="space-y-3">
+              {insights.map((item, index) => (
+                <li
+                  key={index}
+                  className="
+p-3
+rounded-xl
+bg-slate-900/60
+border
+border-slate-800
+text-sm
+"
+                >
+                  <p className="text-white font-semibold">⚡ {item.title}</p>
 
-            <li className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              💎 <strong className="text-white">Upsell Opportunity:</strong>
-              Offer premium plan to top 112 loyal users.
-            </li>
-          </ul>
+                  <p className="text-slate-400 mt-1">{item.message}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </GlassCard>
-      </div>
-      {/* Bottom Visualization Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      </motion.div>
+
+      {/* BOTTOM CHARTS */}
+
+      <motion.div
+        variants={itemVariants}
+        className="
+grid
+grid-cols-1
+md:grid-cols-2
+gap-6
+"
+      >
         <GlassCard>
-          <h2 className="text-lg font-semibold text-slate-100 mb-4">
+          <h2
+            className="
+text-lg
+font-semibold
+text-white
+mb-4
+"
+          >
             Customer Segmentation
           </h2>
 
-          <SegmentChart />
+          {loading ? (
+            <Skeleton className="h-72" />
+          ) : (
+            <SegmentChart segments={segments} />
+          )}
         </GlassCard>
 
         <GlassCard>
-          <h2 className="text-lg font-semibold text-slate-100 mb-4">
+          <h2
+            className="
+text-lg
+font-semibold
+text-white
+mb-4
+"
+          >
             Risk Distribution
           </h2>
 
-          <RiskChart />
+          {loading ? (
+            <Skeleton className="h-72" />
+          ) : (
+            <RiskChart risk={riskData} />
+          )}
         </GlassCard>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

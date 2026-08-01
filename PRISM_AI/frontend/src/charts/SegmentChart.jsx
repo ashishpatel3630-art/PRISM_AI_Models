@@ -1,53 +1,80 @@
+import React from "react";
+
 import {
- ResponsiveContainer,
- PieChart,
- Pie,
- Cell,
- Tooltip
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend
 } from "recharts";
 
 
-import {useEffect,useState} from "react";
-import API from "../api/axios";
-
-
-
-const colors=[
-"#06b6d4",
-"#a855f7",
-"#f43f5e"
+const COLORS = [
+  "#06b6d4",
+  "#8b5cf6",
+  "#f43f5e",
+  "#10b981"
 ];
 
 
+const CustomTooltip = ({active,payload})=>{
 
-const SegmentChart =()=>{
+  if(active && payload && payload.length){
+
+    return (
+      <div className="
+      bg-slate-900 
+      border 
+      border-slate-700
+      rounded-xl
+      p-3
+      text-white
+      text-sm
+      ">
+
+        <p className="font-semibold">
+          {payload[0].name}
+        </p>
+
+        <p className="text-cyan-400">
+          Customers : {payload[0].value}
+        </p>
+
+      </div>
+    )
+
+  }
+
+  return null;
+
+}
 
 
-const [segments,setSegments]=useState([]);
+
+const SegmentChart = ({segments=[]})=>{
 
 
+if(!segments.length){
 
-useEffect(()=>{
+return (
 
+<div className="h-64 flex items-center justify-center text-slate-400">
 
-API.get("/segment")
-.then(res=>{
+No Segment Data
 
-setSegments(res.data)
+</div>
 
-})
-.catch(err=>{
-console.log(err)
-})
+)
 
-
-},[])
+}
 
 
 
 return (
 
-<div className="h-64 w-full">
+<div className="h-72 w-full">
+
 
 <ResponsiveContainer width="100%" height="100%">
 
@@ -67,20 +94,25 @@ cx="50%"
 
 cy="50%"
 
+innerRadius={55}
+
 outerRadius={90}
 
+paddingAngle={5}
 
-/>
+stroke="none"
+
+>
 
 
 {
-segments.map((entry,index)=>(
+segments.map((item,index)=>(
 
 <Cell
 
 key={index}
 
-fill={colors[index % colors.length]}
+fill={COLORS[index % COLORS.length]}
 
 />
 
@@ -89,20 +121,26 @@ fill={colors[index % colors.length]}
 }
 
 
+</Pie>
 
-<Tooltip
 
-contentStyle={{
-backgroundColor:"#0f172a",
-borderColor:"#334155",
-borderRadius:"12px"
-}}
+
+<Tooltip content={<CustomTooltip/>}/>
+
+
+
+<Legend
+
+verticalAlign="bottom"
+
+height={36}
 
 />
 
 
 
 </PieChart>
+
 
 
 </ResponsiveContainer>
@@ -113,8 +151,7 @@ borderRadius:"12px"
 
 )
 
-
 }
 
 
-export default SegmentChart;
+export default React.memo(SegmentChart);
