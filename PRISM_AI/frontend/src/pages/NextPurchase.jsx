@@ -1,197 +1,177 @@
-import { useEffect, useState } from "react";
-import GlassCard from "../components/GlassCard";
-import { ShoppingCart, Clock } from "lucide-react";
-import api from "../api/axios";
+import { useState } from "react";
+import API from "../api/axios";
 
+import GlassCard from "../components/GlassCard";
+import { ShoppingCart, Sparkles, TrendingUp } from "lucide-react";
 
 const NextPurchase = () => {
+  const [loading, setLoading] = useState(false);
 
-const [predictions,setPredictions] = useState([]);
-const [loading,setLoading] = useState(true);
+  const [result, setResult] = useState(null);
 
+  const predictPurchase = async () => {
+    try {
+      setLoading(true);
 
-useEffect(()=>{
+      const response = await API.post("/next-purchase/predict", {
+        Age: 35,
 
-    const fetchPredictions = async()=>{
+        Gender: "Male",
 
-        try{
+        Income: 80000,
 
-            const response = await api.get(
-                "/next-purchase/next_purchase/"
-            );
+        Location: "California",
 
-            setPredictions(response.data);
+        Membership: "Gold",
 
-        }
-        catch(error){
+        Tenure: 24,
 
-            console.log(
-                "API ERROR:",
-                error
-            );
+        TotalSpend: 50000,
 
-        }
-        finally{
-            setLoading(false);
-        }
+        TotalTransactions: 40,
 
+        AverageOrderValue: 1200,
+
+        PurchaseFrequency: 8,
+
+        LastPurchaseDays: 20,
+
+        PreferredCategory: "Electronics",
+
+        WebsiteVisits: 50,
+
+        AppUsageMinutes: 300,
+
+        LoginFrequency: 40,
+
+        WishlistCount: 10,
+
+        CartAbandonmentRate: 0.2,
+
+        EmailOpenRate: 0.8,
+
+        MarketingClicks: 15,
+
+        SatisfactionScore: 9,
+
+        Rating: 5,
+
+        SupportCalls: 2,
+
+        Complaints: 1,
+
+        Reviews: 20,
+
+        CustomerHealthScore: 90,
+
+        ChurnRisk: 0,
+
+        DiscountUsed: 5,
+
+        CouponUsed: 2,
+
+        ReferralCount: 3,
+
+        PaymentMethod: "Credit Card",
+
+        DeviceType: "Mobile",
+
+        ReturnRate: 0.05,
+
+        LoyaltyPoints: 5000,
+      });
+
+      setResult(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold text-white">
+          Next Purchase Prediction Engine
+        </h1>
 
-    fetchPredictions();
+        <p className="text-slate-400">
+          AI predicts customer's next purchase value and buying behavior.
+        </p>
 
-
-},[]);
-
-
-
-if(loading){
-
-return(
-<div className="text-white">
-Loading AI Predictions...
-</div>
-)
-
-}
-
-
-
-return (
-
-<div className="p-6">
-
-
-<h1 className="text-3xl font-bold text-white">
-Next Purchase & Expansion Predictor
-</h1>
-
-
-<p className="text-slate-400 mt-2">
-Propensity models forecasting upcoming cross-sell and upsell timing.
-</p>
-
-
-
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-
-
-{
-predictions.map((p,index)=>(
-
-
-<GlassCard key={index}>
-
-
-<div className="flex justify-between">
-
-<span className="
-p-3 rounded-xl
-bg-purple-500/10
-text-purple-400
-">
-
-<ShoppingCart/>
-
-</span>
-
-
-<span className="
-bg-emerald-500/10
-text-emerald-400
-px-3 py-1
-rounded-lg
-">
-
-{p.likelihood}% Propensity
-
-</span>
-
-
-</div>
-
-
-
-<h2 className="
-text-white 
-font-semibold 
+        <button
+          onClick={predictPurchase}
+          className="
 mt-5
-">
-
-{p.customer}
-
-</h2>
-
-
-
-<p className="text-slate-400 text-sm mt-2">
-
-Predicted Item:
-
-<span className="text-white ml-2">
-
-{p.product}
-
-</span>
-
-</p>
-
-
-
-<div className="
-border-t 
-border-slate-800
-mt-5
-pt-4
-flex
-justify-between
-">
-
-
-<span className="
-text-slate-400
-flex
-gap-2
-items-center
-">
-
-<Clock size={15}/>
-
-{p.expectedDate}
-
-</span>
-
-
-
-<span className="
-text-cyan-400
+px-6
+py-3
+rounded-xl
+bg-gradient-to-r
+from-cyan-500
+to-purple-600
+text-white
 font-bold
-">
+hover:scale-105
+transition
+"
+        >
+          {loading ? "Predicting..." : "Predict Next Purchase 🚀"}
+        </button>
+      </div>
 
-{p.dealValue}
+      {result && (
+        <GlassCard>
+          <div className="flex items-center gap-3">
+            <Sparkles className="text-cyan-400" />
 
-</span>
+            <h2 className="text-lg font-bold text-white">
+              AI Prediction Result
+            </h2>
+          </div>
 
+          <div className="mt-5">
+            <p className="text-slate-400">Expected Next Purchase Amount</p>
 
-</div>
+            <h1
+              className="
+text-4xl
+font-bold
+text-cyan-400
+mt-2
+"
+            >
+              ${result["Predicted Next Purchase Amount"]}
+            </h1>
+          </div>
+        </GlassCard>
+      )}
 
+      <div className="grid md:grid-cols-3 gap-5">
+        <GlassCard>
+          <ShoppingCart className="text-purple-400" />
 
+          <p className="text-slate-400 mt-3">Prediction Window</p>
 
-</GlassCard>
+          <h2 className="text-2xl font-bold text-white">30 Days</h2>
+        </GlassCard>
 
+        <GlassCard>
+          <TrendingUp className="text-green-400" />
 
-))
-}
+          <p className="text-slate-400 mt-3">Customer Intent</p>
 
+          <h2 className="text-2xl font-bold text-white">High</h2>
+        </GlassCard>
 
-</div>
+        <GlassCard>
+          <p className="text-slate-400">AI Confidence</p>
 
-
-</div>
-
-)
-
-}
-
+          <h2 className="text-2xl font-bold text-cyan-400">92%</h2>
+        </GlassCard>
+      </div>
+    </div>
+  );
+};
 
 export default NextPurchase;

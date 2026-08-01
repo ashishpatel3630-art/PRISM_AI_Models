@@ -1,24 +1,49 @@
 from fastapi import APIRouter
-from typing import List
+import pandas as pd
 
 from backend.services.model_loader import clv_pipeline
 
 
 router = APIRouter(
-    prefix="/clv",
     tags=["CLV"]
 )
 
 
 @router.post("/predict")
-def predict(data: List[float]):
+def predict(data: dict):
+
+    input_df = pd.DataFrame([{
+
+        "Income": data["Income"],
+        "Tenure": data["Tenure"],
+        "TotalSpend": data["TotalSpend"],
+        "TotalTransactions": data["TotalTransactions"],
+        "AverageOrderValue": data["AverageOrderValue"],
+        "PurchaseFrequency": data["PurchaseFrequency"],
+        "LastPurchaseDays": data["LastPurchaseDays"],
+        "WebsiteVisits": data["WebsiteVisits"],
+        "AppUsageMinutes": data["AppUsageMinutes"],
+        "LoginFrequency": data["LoginFrequency"],
+        "WishlistCount": data["WishlistCount"],
+        "SatisfactionScore": data["SatisfactionScore"],
+        "Rating": data["Rating"],
+        "CustomerHealthScore": data["CustomerHealthScore"],
+        "SupportCalls": data["SupportCalls"],
+        "Complaints": data["Complaints"]
+
+    }])
 
 
     prediction = clv_pipeline.predict(
-        [data]
+        input_df
     )
 
 
     return {
-        "Predicted_CLV": float(prediction[0])
+
+        "Predicted_CLV": round(
+            float(prediction[0]),
+            2
+        )
+
     }

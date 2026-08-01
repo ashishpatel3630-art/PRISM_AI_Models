@@ -54,18 +54,21 @@ app.include_router(
     tags=["Customer Segmentation"]
 )
 
+
+
 app.include_router(
     clv.router,
     prefix="/api/clv",
     tags=["Customer Lifetime Value"]
 )
 
+
+
+
 app.include_router(
     fraud.router,
-    prefix="/api/fraud",
-    tags=["Fraud Detection"]
+    prefix="/api/fraud"
 )
-
 app.include_router(
     next_purchase.router,
     prefix="/api/next-purchase",

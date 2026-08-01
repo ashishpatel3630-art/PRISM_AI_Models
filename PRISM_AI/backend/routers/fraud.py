@@ -1,49 +1,84 @@
 from fastapi import APIRouter
-import numpy as np
+import pandas as pd
 
-from backend.services.model_loader import (
-    fraud_model,
-    fraud_scaler
-)
+from backend.services.model_loader import fraud_model
 
 
 router = APIRouter(
-    prefix="/fraud",
     tags=["Fraud"]
 )
 
 
-from typing import List
+MODEL_FEATURES = [
+'Age',
+'Gender',
+'Income',
+'Location',
+'AccountAgeDays',
+'Membership',
+'ProductID',
+'Category',
+'Quantity',
+'Price',
+'TotalAmount',
+'PaymentMethod',
+'CardType',
+'TransactionChannel',
+'DeviceType',
+'Browser',
+'IPAddress',
+'PreviousTransactionCount',
+'AverageTransactionAmount',
+'TransactionFrequency',
+'TimeSinceLastTransaction',
+'FailedLoginAttempts',
+'PasswordChangeCount',
+'NewDeviceLogin',
+'IsInternational',
+'DistanceFromHome',
+'CustomerTotalSpend',
+'CustomerAverageSpend',
+'CustomerComplaints',
+'CustomerRating',
+'CustomerHealthScore',
+'RefundCount',
+'ChargebackCount',
+'SuspiciousActivityCount',
+'TransactionMonth',
+'TransactionDay',
+'TransactionHour'
+]
+
 
 @router.post("/predict")
-def predict(data: List[float]):
+def predict(data:dict):
 
-    values = np.array(
-        [data]
-    )
+    df = pd.DataFrame([data])
 
 
-    scaled = fraud_scaler.transform(
-        values
-    )
+    for col in MODEL_FEATURES:
+        if col not in df.columns:
+            df[col] = 0
 
 
-    prediction = fraud_model.predict(
-        scaled
-    )
+    df = df[MODEL_FEATURES]
 
 
-    probability = fraud_model.predict_proba(
-        scaled
-    )
+    prediction = fraud_model.predict(df)
+
+    probability = fraud_model.predict_proba(df)
 
 
     return {
 
-        "Fraud Prediction":
-        int(prediction[0]),
+        "Fraud Prediction": int(prediction[0]),
 
-        "Fraud Probability":
-        float(probability[0][1])
+        "Fraud Probability": round(
+            float(probability[0][1]),
+            4
+        ),
+
+        "Risk":
+        "High" if probability[0][1] > 0.7 else "Low"
 
     }
