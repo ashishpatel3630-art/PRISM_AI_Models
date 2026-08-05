@@ -70,9 +70,6 @@ leading-relaxed
               predict, understand and grow.
             </p>
           </div>
-
-          {/* Links */}
-
           {columns.map((column, index) => (
             <div key={index}>
               <h3
@@ -106,9 +103,6 @@ hover:text-white
             </div>
           ))}
         </div>
-
-        {/* Bottom */}
-
         <div
           className="
 mt-16
@@ -124,7 +118,8 @@ text-gray-500
 md:flex-row
 "
         >
-          <p>© 2026 CustomerIQ AI. All rights reserved.</p>
+          <p>2026 CustomerIQ AI. All rights reserved.</p>
+          <p>Design and Developed by Ashish Patel</p>
 
           <div
             className="
