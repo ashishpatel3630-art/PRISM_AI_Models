@@ -5,7 +5,7 @@ router = APIRouter()
 
 
 
-@router.get("/api/dashboard/risk")
+@router.get("/")
 def risk():
 
     return [

@@ -1,15 +1,56 @@
-import GlassCard from './GlassCard';
+import GlassCard from "./GlassCard";
 
 const Chart = ({ title, subtitle, children }) => {
   return (
-    <GlassCard className="w-full flex flex-col justify-between">
+    <GlassCard
+      className="
+w-full
+flex
+flex-col
+justify-between
+"
+    >
       {(title || subtitle) && (
-        <div className="mb-4">
-          {title && <h3 className="text-base font-semibold text-slate-100">{title}</h3>}
-          {subtitle && <p className="text-xs text-slate-400">{subtitle}</p>}
+        <div
+          className="
+mb-6
+"
+        >
+          {title && (
+            <h3
+              className="
+text-lg
+font-semibold
+tracking-tight
+text-white
+"
+            >
+              {title}
+            </h3>
+          )}
+
+          {subtitle && (
+            <p
+              className="
+mt-2
+text-sm
+text-gray-500
+"
+            >
+              {subtitle}
+            </p>
+          )}
         </div>
       )}
-      <div className="w-full">{children}</div>
+
+      <div
+        className="
+w-full
+min-h-[280px]
+"
+      >
+        {children}
+      </div>
     </GlassCard>
   );
 };

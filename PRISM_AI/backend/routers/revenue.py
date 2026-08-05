@@ -3,7 +3,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/api/dashboard/revenue")
+@router.get("/")
 def revenue_forecast():
 
     data = [
@@ -28,6 +28,5 @@ def revenue_forecast():
             "revenue":260000
         }
     ]
-
 
     return data

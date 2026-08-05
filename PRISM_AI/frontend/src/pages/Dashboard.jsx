@@ -83,15 +83,15 @@ function Dashboard() {
 
       const [statsData, insightsData, revenueData, segmentData, riskData] =
         await Promise.all([
-          API.get("/dashboard"),
+          API.get("/api/dashboard"),
 
-          API.get("/insights"),
+          API.get("/api/insights"),
 
-          API.get("/revenue"),
+          API.get("/api/revenue"),
 
-          API.get("/segment"),
+          API.get("/api/segment"),
 
-          API.get("/risk"),
+          API.get("/api/risk"),
         ]);
 
       setStats(statsData.data || {});
@@ -152,7 +152,7 @@ tracking-tight
 text-white
 "
             >
-              Good Morning, Ashish 👋
+              Good Morning, Ashish 
             </h1>
 
             <div

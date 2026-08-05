@@ -1,14 +1,12 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from backend.auth.dependencies import get_current_user
 
 
 router = APIRouter()
 
 
-from backend.auth.dependencies import get_current_user
-from fastapi import Depends
-
-
-@router.get("/dashboard")
+@router.get("/")
 def dashboard(
     current_user = Depends(get_current_user)
 ):
