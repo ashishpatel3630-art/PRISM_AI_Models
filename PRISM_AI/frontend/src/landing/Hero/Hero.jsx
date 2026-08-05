@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 
+import { useNavigate } from "react-router-dom";
 function Hero() {
+  const navigate = useNavigate();
   return (
     <section
       className="
@@ -62,7 +64,7 @@ function Hero() {
           text-gray-300
           backdrop-blur-xl
           "
-                  >
+        >
           AI Powered Customer Intelligence
         </motion.div>
         <motion.h1
@@ -144,8 +146,9 @@ function Hero() {
           flex
           gap-4
           "
-          >
+        >
           <button
+            onClick={() => navigate("/login")}
             className="
                     rounded-xl
                     bg-white

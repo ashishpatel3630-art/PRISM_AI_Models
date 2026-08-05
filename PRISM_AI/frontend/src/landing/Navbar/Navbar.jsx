@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <nav
       className="
@@ -57,13 +59,15 @@ function Navbar() {
           "
         >
           <button
+            onClick={() => navigate("/login")}
             className="
-            hidden
-            text-sm
-            text-gray-300
-            sm:block
-            hover:text-amber-50
-            "
+hidden
+text-sm
+text-gray-300
+sm:block
+hover:text-white
+transition
+"
           >
             Login
           </button>

@@ -18,48 +18,189 @@ const Login = () => {
         password,
       });
 
-      const token = res.data.access_token;
+      localStorage.setItem("token", res.data.access_token);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem(
-"user",
-JSON.stringify(res.data.user)
-);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
+
       setError("Invalid credentials");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950">
-      <div className="w-96 p-8 rounded-2xl bg-slate-900 border border-slate-800">
-        <h1 className="text-2xl text-white font-bold mb-6">PRISM AI Login</h1>
+    <div
+      className="
+min-h-screen
+flex
+items-center
+justify-center
+bg-[#050505]
+text-white
+px-6
+"
+    >
+      <div
+        className="
+w-full
+max-w-md
+rounded-3xl
+border
+border-white/10
+bg-white/[0.03]
+p-8
+backdrop-blur-xl
+"
+      >
+        <h1
+          className="
+text-3xl
+font-bold
+text-center
+"
+        >
+          CustomerIQ
+          <span className="text-gray-500">AI</span>
+        </h1>
 
-        <form onSubmit={handleLogin}>
+        <p
+          className="
+mt-3
+text-center
+text-gray-400
+"
+        >
+          Welcome back
+        </p>
+
+        <form onSubmit={handleLogin} className="mt-8">
           <input
-            className="w-full mb-4 p-3 rounded bg-slate-800 text-white"
+            className="
+w-full
+rounded-xl
+border
+border-white/10
+bg-black
+p-4
+text-white
+outline-none
+"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
-            className="w-full mb-4 p-3 rounded bg-slate-800 text-white"
+            className="
+mt-4
+w-full
+rounded-xl
+border
+border-white/10
+bg-black
+p-4
+text-white
+outline-none
+"
             placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          {error && <p className="text-red-400 mb-3">{error}</p>}
+          {error && (
+            <p
+              className="
+mt-4
+text-sm
+text-red-400
+"
+            >
+              {error}
+            </p>
+          )}
 
-          <button className="w-full bg-cyan-500 p-3 rounded-lg font-bold">
+          <button
+            className="
+mt-6
+w-full
+rounded-xl
+bg-white
+p-4
+font-semibold
+text-black
+transition
+hover:scale-[1.02]
+"
+          >
             Login
           </button>
         </form>
+
+        <div
+          className="
+my-6
+flex
+items-center
+gap-4
+"
+        >
+          <div
+            className="
+h-px
+flex-1
+bg-white/10
+"
+          />
+
+          <span
+            className="
+text-sm
+text-gray-500
+"
+          >
+            OR
+          </span>
+
+          <div
+            className="
+h-px
+flex-1
+bg-white/10
+"
+          />
+        </div>
+
+        <button
+          className="
+w-full
+rounded-xl
+border
+border-white/10
+bg-white/5
+p-4
+hover:bg-white/10
+"
+        >
+          Continue with Google
+        </button>
+
+        <button
+          className="
+mt-3
+w-full
+rounded-xl
+border
+border-white/10
+bg-white/5
+p-4
+hover:bg-white/10
+"
+        >
+          Continue with GitHub
+        </button>
       </div>
     </div>
   );

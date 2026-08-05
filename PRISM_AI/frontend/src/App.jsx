@@ -14,14 +14,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Landing Page */}
         <Route path="/" element={<Landing />} />
-
-        {/* Login */}
         <Route path="/login" element={<Login />} />
-
-        {/* Dashboard Routes */}
-
         <Route
           element={
             <ProtectedRoute>

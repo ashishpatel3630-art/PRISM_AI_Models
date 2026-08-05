@@ -1,15 +1,13 @@
-import
- React
- 
-, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import {
-  Sparkles,
-  // TrendingUp,
-  // Users,
-  // AlertTriangle,
   RefreshCw,
+  Users,
+  Activity,
+  AlertTriangle,
+  DollarSign,
+  Sparkles,
 } from "lucide-react";
 
 import GlassCard from "../components/GlassCard";
@@ -20,7 +18,7 @@ import RiskChart from "../charts/RiskChart";
 
 import API from "../api/axios";
 
-const containerVariants = {
+const container = {
   hidden: {
     opacity: 0,
   },
@@ -29,40 +27,39 @@ const containerVariants = {
     opacity: 1,
 
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.12,
     },
   },
 };
 
-const itemVariants = {
+const item = {
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 25,
   },
 
   visible: {
     opacity: 1,
-
     y: 0,
 
     transition: {
-      duration: 0.4,
+      duration: 0.5,
     },
   },
 };
 
-const Skeleton = ({ className = "" }) => (
+const Skeleton = ({ height = "h-40" }) => (
   <div
     className={`
+${height}
+rounded-2xl
+bg-white/5
 animate-pulse
-rounded-xl
-bg-slate-800/70
-${className}
 `}
-  />
+  ></div>
 );
 
-const Dashboard = () => {
+function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   const [stats, setStats] = useState({
@@ -72,19 +69,19 @@ const Dashboard = () => {
     revenue: 0,
   });
 
-  const [segments, setSegments] = useState([]);
-
-  const [riskData, setRiskData] = useState([]);
-
   const [insights, setInsights] = useState([]);
 
   const [revenue, setRevenue] = useState([]);
+
+  const [segments, setSegments] = useState([]);
+
+  const [riskData, setRiskData] = useState([]);
 
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
 
-      const [statsRes, insightsRes, revenueRes, segmentRes, riskRes] =
+      const [statsData, insightsData, revenueData, segmentData, riskData] =
         await Promise.all([
           API.get("/dashboard"),
 
@@ -97,17 +94,17 @@ const Dashboard = () => {
           API.get("/risk"),
         ]);
 
-      setStats(statsRes.data || {});
+      setStats(statsData.data || {});
 
-      setInsights(insightsRes.data || []);
+      setInsights(insightsData.data || []);
 
-      setRevenue(revenueRes.data || []);
+      setRevenue(revenueData.data || []);
 
-      setSegments(segmentRes.data || []);
+      setSegments(segmentData.data || []);
 
-      setRiskData(riskRes.data || []);
+      setRiskData(riskData.data || []);
     } catch (error) {
-      console.log("Dashboard Error:", error);
+      console.log("Dashboard Error", error);
     } finally {
       setLoading(false);
     }
@@ -119,40 +116,68 @@ const Dashboard = () => {
 
   return (
     <motion.div
-      className="space-y-8"
-      variants={containerVariants}
+      variants={container}
       initial="hidden"
       animate="visible"
+      className="
+space-y-10
+"
     >
-      {/* HERO */}
+      {/* HEADER */}
 
       <motion.div
-        variants={itemVariants}
+        variants={item}
         className="
 flex
-justify-between
-items-center
+flex-col
+gap-6
+md:flex-row
+md:items-center
+md:justify-between
 "
       >
         <div>
-          <h1
+          <div
             className="
-text-2xl
-font-bold
-text-white
+flex
+items-center
+gap-3
 "
           >
-            Good Morning, Ashish 👋
-          </h1>
+            <h1
+              className="
+text-4xl
+font-semibold
+tracking-tight
+text-white
+"
+            >
+              Good Morning, Ashish 👋
+            </h1>
+
+            <div
+              className="
+rounded-full
+border
+border-white/10
+bg-white/5
+px-3
+py-1
+text-xs
+text-gray-400
+"
+            >
+              AI Active
+            </div>
+          </div>
 
           <p
             className="
-text-sm
-text-slate-400
-mt-2
+mt-3
+text-gray-400
 "
           >
-            AI-powered customer intelligence and real-time updates.
+            Customer intelligence powered by AI models.
           </p>
         </div>
 
@@ -162,248 +187,280 @@ mt-2
 flex
 items-center
 gap-2
-px-4
-py-2
 rounded-xl
-bg-slate-900
 border
-border-slate-700
-text-white
+border-white/10
+bg-white/5
+px-5
+py-3
 text-sm
-hover:border-cyan-400
+text-gray-300
 transition
+hover:bg-white/10
 "
         >
-          <RefreshCw
-            className={`
-h-4
-w-4
-${loading ? "animate-spin" : ""}
-`}
-          />
+          <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           Refresh
         </button>
       </motion.div>
 
-      {/* STATS */}
+      {/* STAT CARDS */}
 
       <motion.div
-        variants={itemVariants}
+        variants={item}
         className="
 grid
 grid-cols-1
+gap-6
 sm:grid-cols-2
-lg:grid-cols-4
-gap-5
+xl:grid-cols-4
 "
       >
-        <GlassCard>
-          {loading ? (
-            <Skeleton className="h-20" />
-          ) : (
-            <div>
-              <p className="text-xs text-slate-400">Total Customers</p>
+        <StatsCard
+          icon={<Users />}
+          title="Customers"
+          value={stats.customers?.toLocaleString()}
+        />
 
-              <h2
-                className="
-text-3xl
-font-bold
-text-white
-mt-2
-"
-              >
-                {(stats.customers || 0).toLocaleString()}
-              </h2>
-            </div>
-          )}
-        </GlassCard>
+        <StatsCard
+          icon={<Activity />}
+          title="Health Score"
+          value={`${stats.health || 0}%`}
+        />
 
-        <GlassCard>
-          {loading ? (
-            <Skeleton className="h-20" />
-          ) : (
-            <div>
-              <p className="text-xs text-slate-400">Average Health Score</p>
+        <StatsCard
+          icon={<AlertTriangle />}
+          title="Risk Customers"
+          value={stats.risk?.toLocaleString()}
+        />
 
-              <h2
-                className="
-text-3xl
-font-bold
-text-emerald-400
-mt-2
-"
-              >
-                {stats.health || 0}/100
-              </h2>
-            </div>
-          )}
-        </GlassCard>
-
-        <GlassCard>
-          {loading ? (
-            <Skeleton className="h-20" />
-          ) : (
-            <div>
-              <p className="text-xs text-slate-400">High Risk Customers</p>
-
-              <h2
-                className="
-text-3xl
-font-bold
-text-rose-400
-mt-2
-"
-              >
-                {(stats.risk || 0).toLocaleString()}
-              </h2>
-            </div>
-          )}
-        </GlassCard>
-
-        <GlassCard>
-          {loading ? (
-            <Skeleton className="h-20" />
-          ) : (
-            <div>
-              <p className="text-xs text-slate-400">Predicted Revenue</p>
-
-              <h2
-                className="
-text-3xl
-font-bold
-text-purple-400
-mt-2
-"
-              >
-                ${stats.revenue || 0}M
-              </h2>
-            </div>
-          )}
-        </GlassCard>
+        <StatsCard
+          icon={<DollarSign />}
+          title="Revenue"
+          value={`$${stats.revenue || 0}M`}
+        />
       </motion.div>
 
-      {/* MAIN SECTION */}
+      {/* AI SECTION */}
 
       <motion.div
-        variants={itemVariants}
+        variants={item}
         className="
 grid
-grid-cols-1
-lg:grid-cols-3
 gap-6
+lg:grid-cols-3
 "
       >
-        <GlassCard className="lg:col-span-2">
-          <h2
-            className="
-text-lg
-font-semibold
-text-white
-mb-4
-"
-          >
-            Revenue Growth Forecast
-          </h2>
-
-          {loading ? (
-            <Skeleton className="h-72" />
-          ) : (
-            <RevenueChart data={revenue} />
-          )}
-        </GlassCard>
-
         <GlassCard>
           <div
             className="
 flex
 items-center
-gap-2
-text-cyan-400
-font-semibold
-mb-4
+gap-3
+text-gray-400
 "
           >
             <Sparkles size={18} />
-            AI Insights Engine
+            AI Health Score
           </div>
 
-          {loading ? (
-            <Skeleton className="h-72" />
-          ) : (
-            <ul className="space-y-3">
-              {insights.map((item, index) => (
-                <li
-                  key={index}
-                  className="
-p-3
-rounded-xl
-bg-slate-900/60
-border
-border-slate-800
+          <h2
+            className="
+mt-8
+text-6xl
+font-semibold
+text-white
+"
+          >
+            {stats.health || 0}
+          </h2>
+
+          <p
+            className="
+mt-3
 text-sm
+text-gray-400
+"
+          >
+            Overall customer stability
+          </p>
+        </GlassCard>
+
+        <GlassCard>
+          <h2
+            className="
+text-lg
+font-semibold
+"
+          >
+            AI Insights
+          </h2>
+
+          <div
+            className="
+mt-5
+space-y-3
+"
+          >
+            {insights.slice(0, 3).map((data, index) => (
+              <div
+                key={index}
+                className="
+rounded-xl
+border
+border-white/10
+bg-black/40
+p-4
+"
+              >
+                <p
+                  className="
+text-sm
+text-white
 "
                 >
-                  <p className="text-white font-semibold">⚡ {item.title}</p>
+                  {data.title}
+                </p>
 
-                  <p className="text-slate-400 mt-1">{item.message}</p>
-                </li>
-              ))}
-            </ul>
-          )}
+                <p
+                  className="
+mt-2
+text-xs
+text-gray-500
+"
+                >
+                  {data.message}
+                </p>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard>
+          <h2
+            className="
+text-lg
+font-semibold
+"
+          >
+            Model Confidence
+          </h2>
+
+          <p
+            className="
+mt-8
+text-6xl
+font-semibold
+"
+          >
+            96%
+          </p>
+
+          <p
+            className="
+mt-3
+text-gray-400
+"
+          >
+            Prediction accuracy
+          </p>
         </GlassCard>
       </motion.div>
 
-      {/* BOTTOM CHARTS */}
+      {/* CHARTS */}
 
       <motion.div
-        variants={itemVariants}
+        variants={item}
         className="
 grid
-grid-cols-1
-md:grid-cols-2
 gap-6
+lg:grid-cols-2
 "
       >
-        <GlassCard>
-          <h2
-            className="
-text-lg
-font-semibold
-text-white
-mb-4
-"
-          >
-            Customer Segmentation
-          </h2>
+        <ChartCard title="Revenue Intelligence">
+          {loading ? <Skeleton /> : <RevenueChart data={revenue} />}
+        </ChartCard>
 
-          {loading ? (
-            <Skeleton className="h-72" />
-          ) : (
-            <SegmentChart segments={segments} />
-          )}
-        </GlassCard>
+        <ChartCard title="Customer Segmentation">
+          {loading ? <Skeleton /> : <SegmentChart segments={segments} />}
+        </ChartCard>
+      </motion.div>
 
-        <GlassCard>
-          <h2
-            className="
-text-lg
-font-semibold
-text-white
-mb-4
-"
-          >
-            Risk Distribution
-          </h2>
-
-          {loading ? (
-            <Skeleton className="h-72" />
-          ) : (
-            <RiskChart risk={riskData} />
-          )}
-        </GlassCard>
+      <motion.div variants={item}>
+        <ChartCard title="Risk Distribution">
+          {loading ? <Skeleton height="h-72" /> : <RiskChart risk={riskData} />}
+        </ChartCard>
       </motion.div>
     </motion.div>
   );
-};
+}
+
+function StatsCard({ icon, title, value }) {
+  return (
+    <GlassCard>
+      <div
+        className="
+flex
+items-center
+justify-between
+"
+      >
+        <div>
+          <p
+            className="
+text-sm
+text-gray-500
+"
+          >
+            {title}
+          </p>
+
+          <h2
+            className="
+mt-3
+text-3xl
+font-semibold
+text-white
+"
+          >
+            {value || 0}
+          </h2>
+        </div>
+
+        <div
+          className="
+rounded-xl
+border
+border-white/10
+bg-white/5
+p-3
+text-gray-300
+"
+        >
+          {icon}
+        </div>
+      </div>
+    </GlassCard>
+  );
+}
+
+function ChartCard({ title, children }) {
+  return (
+    <GlassCard>
+      <h2
+        className="
+mb-6
+text-xl
+font-semibold
+text-white
+"
+      >
+        {title}
+      </h2>
+
+      {children}
+    </GlassCard>
+  );
+}
 
 export default Dashboard;
