@@ -1,8 +1,10 @@
 import { useState } from "react";
+
 import GlassCard from "../components/GlassCard";
 import RevenueChart from "../charts/RevenueChart";
 import API from "../api/axios";
-import { TrendingUp, Sparkles } from "lucide-react";
+
+import { TrendingUp, Sparkles, Brain, DollarSign, Loader2 } from "lucide-react";
 
 const CLV = () => {
   const [result, setResult] = useState(null);
@@ -40,38 +42,12 @@ const CLV = () => {
     try {
       setLoading(true);
 
-      const response = await API.post("/api/clv/predict", {
-        Income: Number(formData.Income),
-        Tenure: Number(formData.Tenure),
+      const response = await API.post(
+        "/api/clv/predict",
 
-          TotalSpend: Number(formData.TotalSpend),
-
-          TotalTransactions: Number(formData.TotalTransactions),
-
-          AverageOrderValue: Number(formData.AverageOrderValue),
-
-          PurchaseFrequency: Number(formData.PurchaseFrequency),
-
-          LastPurchaseDays: Number(formData.LastPurchaseDays),
-
-          WebsiteVisits: Number(formData.WebsiteVisits),
-
-          AppUsageMinutes: Number(formData.AppUsageMinutes),
-
-          LoginFrequency: Number(formData.LoginFrequency),
-
-          WishlistCount: Number(formData.WishlistCount),
-
-          SatisfactionScore: Number(formData.SatisfactionScore),
-
-          Rating: Number(formData.Rating),
-
-          CustomerHealthScore: Number(formData.CustomerHealthScore),
-
-          SupportCalls: Number(formData.SupportCalls),
-
-          Complaints: Number(formData.Complaints),
-        },
+        Object.fromEntries(
+          Object.entries(formData).map(([key, value]) => [key, Number(value)]),
+        ),
       );
 
       setResult(response.data);
@@ -85,76 +61,242 @@ const CLV = () => {
   const fields = Object.keys(formData);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-white">
-          Customer Lifetime Value (CLV) Prediction
-        </h1>
+    <div
+      className="
+min-h-screen
+bg-[#050505]
+text-white
+p-6
+md:p-10
+"
+    >
+      {/* HEADER */}
 
-        <p className="text-slate-400 mt-2">
-          Predictive 12-month revenue trajectory and account valuation models.
-        </p>
+      <div className="mb-10">
+        <div
+          className="
+flex
+items-center
+gap-4
+"
+        >
+          <div
+            className="
+p-4
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+"
+          >
+            <Brain className="text-cyan-400" />
+          </div>
+
+          <div>
+            <h1
+              className="
+text-3xl
+font-bold
+"
+            >
+              Customer Lifetime Value AI
+            </h1>
+
+            <p
+              className="
+text-gray-500
+mt-2
+"
+            >
+              Predictive 12-month revenue trajectory and customer valuation
+              model
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {/* KPI CARDS */}
+
+      <div
+        className="
+grid
+md:grid-cols-3
+gap-6
+mb-8
+"
+      >
         <GlassCard>
-          <p className="text-xs text-slate-400">Average Historical CLV</p>
+          <p
+            className="
+text-sm
+text-gray-500
+"
+          >
+            Average Historical CLV
+          </p>
 
-          <h3 className="text-2xl font-bold text-white mt-1">$4,850</h3>
+          <h2
+            className="
+text-3xl
+font-bold
+mt-3
+"
+          >
+            $4,850
+          </h2>
 
-          <p className="text-xs text-emerald-400 mt-2 flex gap-1 items-center">
-            <TrendingUp size={14} />
+          <p
+            className="
+flex
+items-center
+gap-2
+text-green-400
+text-sm
+mt-3
+"
+          >
+            <TrendingUp size={15} />
             +12% YoY
           </p>
         </GlassCard>
 
         <GlassCard>
-          <p className="text-xs text-slate-400">Predicted CLV</p>
+          <p
+            className="
+text-sm
+text-gray-500
+"
+          >
+            Predicted CLV
+          </p>
 
-          <h3 className="text-2xl font-bold text-cyan-400 mt-1">
-            {result ? `$${result.Predicted_CLV}` : "$----"}
-          </h3>
+          <h2
+            className="
+text-3xl
+font-bold
+text-white
+mt-3
+"
+          >
+            {result ? `$${result.Predicted_CLV}` : "----"}
+          </h2>
 
-          <p className="text-xs text-slate-400 mt-2">
+          <p
+            className="
+text-gray-500
+text-sm
+mt-3
+"
+          >
             AI Generated Customer Value
           </p>
         </GlassCard>
 
         <GlassCard>
-          <p className="text-xs text-slate-400">High LTV Segment</p>
+          <p
+            className="
+text-sm
+text-gray-500
+"
+          >
+            High LTV Segment
+          </p>
 
-          <h3 className="text-2xl font-bold text-purple-400 mt-1">18.4%</h3>
+          <h2
+            className="
+text-3xl
+font-bold
+mt-3
+"
+          >
+            18.4%
+          </h2>
 
-          <p className="text-xs text-slate-400 mt-2">Premium Customer Base</p>
+          <p
+            className="
+text-gray-500
+text-sm
+mt-3
+"
+          >
+            Premium Customer Base
+          </p>
         </GlassCard>
       </div>
 
-      <GlassCard>
-        <h2 className="text-lg font-semibold text-white mb-5">
-          CLV Prediction Input
-        </h2>
+      {/* FORM */}
 
-        <div className="grid md:grid-cols-4 gap-4">
+      <GlassCard>
+        <div
+          className="
+flex
+items-center
+gap-3
+mb-8
+"
+        >
+          <DollarSign className="text-cyan-400" />
+
+          <h2
+            className="
+text-xl
+font-semibold
+"
+          >
+            CLV Prediction Input
+          </h2>
+        </div>
+
+        <div
+          className="
+grid
+md:grid-cols-4
+gap-5
+"
+        >
           {fields.map((field) => (
             <div key={field}>
-              <label className="text-xs text-slate-400">{field}</label>
+              <label
+                className="
+text-xs
+text-gray-500
+"
+              >
+                {field}
+              </label>
 
               <input
                 name={field}
                 value={formData[field]}
                 onChange={handleChange}
+                type="number"
                 placeholder={`Enter ${field}`}
                 className="
-w-full
+
 mt-2
-p-3
+
+w-full
+
 rounded-xl
-bg-black/40
+
+bg-black
+
 border
-border-white/20
+
+border-white/10
+
+px-4
+
+py-3
+
 text-white
+
 outline-none
-focus:border-cyan-500
+
+focus:border-cyan-400
+
+transition
+
 "
               />
             </div>
@@ -165,28 +307,116 @@ focus:border-cyan-500
           onClick={predictCLV}
           disabled={loading}
           className="
-mt-6
+
+mt-8
+
 w-full
+
 py-4
-rounded-xl
-bg-gradient-to-r
-from-cyan-500
-to-purple-600
-text-white
+
+rounded-2xl
+
+bg-white
+
+text-black
+
 font-bold
-hover:scale-105
+
+text-lg
+
+hover:bg-gray-200
+
+hover:scale-[1.02]
+
 transition
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
 "
         >
-          {loading ? "Predicting..." : "Predict Customer CLV 🚀"}
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Predicting CLV...
+            </>
+          ) : (
+            <>
+              <Sparkles />
+              Predict Customer CLV
+            </>
+          )}
         </button>
       </GlassCard>
 
-      <GlassCard>
-        <div className="flex items-center gap-2 mb-5">
+      {/* RESULT */}
+
+      {result && (
+        <GlassCard className="mt-8">
+          <h2
+            className="
+text-xl
+font-semibold
+mb-5
+"
+          >
+            AI Valuation Result
+          </h2>
+
+          <div
+            className="
+bg-black
+rounded-2xl
+border
+border-white/10
+p-6
+"
+          >
+            <p
+              className="
+text-gray-500
+"
+            >
+              Predicted Customer Lifetime Value
+            </p>
+
+            <h1
+              className="
+text-5xl
+font-bold
+mt-3
+"
+            >
+              ${result.Predicted_CLV}
+            </h1>
+          </div>
+        </GlassCard>
+      )}
+
+      {/* CHART */}
+
+      <GlassCard className="mt-8">
+        <div
+          className="
+flex
+items-center
+gap-3
+mb-6
+"
+        >
           <Sparkles className="text-cyan-400" />
 
-          <h2 className="text-lg font-semibold text-white">
+          <h2
+            className="
+text-xl
+font-semibold
+"
+          >
             Projected Lifetime Revenue Growth
           </h2>
         </div>

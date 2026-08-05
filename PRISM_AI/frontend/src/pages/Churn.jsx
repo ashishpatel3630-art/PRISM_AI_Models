@@ -1,9 +1,19 @@
 import { useState } from "react";
 import API from "../api/axios";
-import { ShieldAlert, CheckCircle, TrendingDown, Loader2 } from "lucide-react";
+
+import {
+  ShieldAlert,
+  CheckCircle,
+  Loader2,
+  Brain,
+  Activity,
+  TrendingDown,
+} from "lucide-react";
 
 const ChurnPredict = () => {
   const [loading, setLoading] = useState(false);
+
+  const [result, setResult] = useState(null);
 
   const [formData, setFormData] = useState({
     Age: "",
@@ -24,15 +34,13 @@ const ChurnPredict = () => {
     WishlistCount: "",
     CartAbandonmentRate: "",
     MarketingClicks: "",
-    SatisfactionScore: "",
-    Rating: "",
+    SatisfactionScore: 50,
+    Rating: 50,
     SupportCalls: "",
     Complaints: "",
     Reviews: "",
-    CustomerHealthScore: "",
+    CustomerHealthScore: 50,
   });
-
-  const [result, setResult] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -46,7 +54,8 @@ const ChurnPredict = () => {
     try {
       setLoading(true);
 
-      const res = await API.post("/api/churn/predict", formData)
+      const res = await API.post("/api/churn/predict", formData);
+
       setResult(res.data);
     } catch (error) {
       console.log(error);
@@ -89,54 +98,96 @@ const ChurnPredict = () => {
     <div
       className="
 min-h-screen
-bg-gradient-to-br
-from-[#0f172a]
-via-purple-950
-to-black
-p-8
+bg-[#050505]
+text-white
+p-6
+md:p-10
 "
     >
+      {/* Header */}
+
+      <div className="mb-10">
+        <div
+          className="
+flex
+items-center
+gap-4
+"
+        >
+          <div
+            className="
+p-4
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+"
+          >
+            <Brain className="text-cyan-400" />
+          </div>
+
+          <div>
+            <h1
+              className="
+text-3xl
+font-bold
+tracking-tight
+"
+            >
+              Customer Churn AI
+            </h1>
+
+            <p
+              className="
+text-gray-500
+mt-1
+"
+            >
+              Machine Learning Customer Risk Intelligence
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Card */}
+
       <div
         className="
-max-w-6xl
-mx-auto
-bg-white/10
-backdrop-blur-xl
+
+bg-[#0B0B0B]
+
 border
-border-white/20
+
+border-white/10
+
 rounded-3xl
-p-8
+
+p-6
+
+md:p-10
+
 shadow-2xl
+
 "
       >
-        <h1
+        <h2
           className="
-text-4xl
-font-bold
-text-white
-mb-2
 flex
 items-center
 gap-3
-"
-        >
-          <ShieldAlert className="text-purple-400" />
-          Customer Churn Prediction AI
-        </h1>
-
-        <p
-          className="
-text-gray-400
+text-xl
+font-semibold
 mb-8
 "
         >
-          Predict customer risk using Machine Learning
-        </p>
+          <Activity className="text-cyan-400" />
+          Customer Profile
+        </h2>
 
         <div
           className="
 grid
-md:grid-cols-2
+md:grid-cols-3
 gap-6
 "
         >
@@ -144,8 +195,8 @@ gap-6
             <div key={field}>
               <label
                 className="
-text-gray-300
 text-sm
+text-gray-400
 "
               >
                 {field}
@@ -158,17 +209,31 @@ text-sm
                 onChange={handleChange}
                 placeholder={`Enter ${field}`}
                 className="
-w-full
+
 mt-2
-p-3
+
+w-full
+
 rounded-xl
-bg-black/40
-text-white
+
+bg-black
+
 border
-border-white/20
-focus:ring-2
-focus:ring-purple-500
+
+border-white/10
+
+px-4
+
+py-3
+
+text-white
+
 outline-none
+
+focus:border-cyan-400
+
+transition
+
 "
               />
             </div>
@@ -178,8 +243,8 @@ outline-none
             <div key={field}>
               <label
                 className="
-text-gray-300
 text-sm
+text-gray-400
 "
               >
                 {field}
@@ -190,17 +255,32 @@ text-sm
                 value={formData[field]}
                 onChange={handleChange}
                 className="
-w-full
+
 mt-2
-p-3
+
+w-full
+
 rounded-xl
-bg-black/40
-text-white
+
+bg-black
+
 border
-border-white/20
+
+border-white/10
+
+px-4
+
+py-3
+
+text-white
+
+outline-none
+
+focus:border-white
+
 "
               >
-                <option value="">Select {field}</option>
+                <option>Select {field}</option>
 
                 {dropdowns[field].map((item) => (
                   <option key={item} value={item}>
@@ -212,26 +292,57 @@ border-white/20
           ))}
         </div>
 
-        {/* Scores */}
+        {/* AI Score Section */}
 
         <div
           className="
 grid
 md:grid-cols-3
 gap-6
-mt-8
+mt-10
 "
         >
           {["SatisfactionScore", "Rating", "CustomerHealthScore"].map(
             (field) => (
-              <div key={field}>
-                <label
+              <div
+                key={field}
+                className="
+
+bg-black
+
+border
+
+border-white/10
+
+rounded-2xl
+
+p-5
+
+"
+              >
+                <div
                   className="
-text-gray-300
+flex
+justify-between
 "
                 >
-                  {field}
-                </label>
+                  <span
+                    className="
+text-gray-400
+"
+                  >
+                    {field}
+                  </span>
+
+                  <span
+                    className="
+font-bold
+text-cyan-400
+"
+                  >
+                    {formData[field]}
+                  </span>
+                </div>
 
                 <input
                   type="range"
@@ -241,110 +352,150 @@ text-gray-300
                   value={formData[field]}
                   onChange={handleChange}
                   className="
+
 w-full
-mt-3
-accent-purple-500
+
+mt-5
+
+accent-cyan-400
+
 "
                 />
-
-                <p
-                  className="
-text-white
-text-center
-"
-                >
-                  {formData[field] || 0}
-                </p>
               </div>
             ),
           )}
         </div>
 
+        {/* Button */}
+
         <button
           onClick={predictChurn}
           disabled={loading}
           className="
+
 mt-10
+
 w-full
+
+rounded-2xl
+
 py-4
-rounded-xl
-bg-gradient-to-r
-from-purple-600
-to-pink-600
-text-white
+
+bg-white
+
+text-black
+
 font-bold
+
 text-lg
-hover:scale-105
+
+hover:bg-gray-200
+
+hover:scale-[1.02]
+
 transition
+
 flex
-justify-center
+
 items-center
+
+justify-center
+
 gap-3
+
 "
         >
           {loading ? (
             <>
               <Loader2 className="animate-spin" />
-              Predicting...
+              Analyzing...
             </>
           ) : (
-            "Predict Customer Risk 🚀"
+            <>
+              <TrendingDown />
+              Predict Churn Risk
+            </>
           )}
         </button>
+      </div>
 
-        {result && (
-          <div
-            className="
+      {/* RESULT */}
+
+      {result && (
+        <div
+          className="
+
 mt-8
-p-6
-rounded-2xl
-bg-black/40
+
+bg-[#0B0B0B]
+
 border
-border-white/20
-text-white
+
+border-white/10
+
+rounded-3xl
+
+p-8
+
+shadow-xl
+
+"
+        >
+          <h2
+            className="
+text-xl
+font-semibold
+mb-6
 "
           >
-            <h2
-              className="
-text-2xl
-font-bold
-mb-4
+            Prediction Result
+          </h2>
+
+          <div
+            className="
+flex
+items-center
+gap-5
 "
-            >
-              Prediction Result
-            </h2>
+          >
+            {result.prediction === 1 ? (
+              <ShieldAlert size={50} className="text-red-400" />
+            ) : (
+              <CheckCircle size={50} className="text-green-400" />
+            )}
 
-            <div className="flex gap-3 items-center">
-              {result.prediction === 1 ? (
-                <ShieldAlert className="text-red-500" />
-              ) : (
-                <CheckCircle className="text-green-500" />
-              )}
-
-              <span
+            <div>
+              <p
                 className="
-text-xl
+text-2xl
 font-bold
 "
               >
                 {result.status}
-              </span>
-            </div>
+              </p>
 
-            <div
-              className="
-mt-4
-text-lg
+              <p
+                className="
+text-gray-500
+mt-2
 "
-            >
-              Churn Probability :
-              <span className="font-bold text-purple-400">
+              >
+                Churn Probability
+              </p>
+
+              <p
+                className="
+text-4xl
+font-bold
+mt-2
+"
+              >
                 {(result.churn_probability * 100).toFixed(2)}%
-              </span>
+              </p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

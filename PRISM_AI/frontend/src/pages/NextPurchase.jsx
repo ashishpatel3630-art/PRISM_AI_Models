@@ -2,10 +2,15 @@ import { useState } from "react";
 import API from "../api/axios";
 
 import GlassCard from "../components/GlassCard";
-import { ShoppingCart, Sparkles, 
-    // TrendingUp
 
- } from "lucide-react";
+import {
+  ShoppingCart,
+  Sparkles,
+  Brain,
+  TrendingUp,
+  Loader2,
+  Target,
+} from "lucide-react";
 
 const NextPurchase = () => {
   const [result, setResult] = useState(null);
@@ -15,7 +20,9 @@ const NextPurchase = () => {
     Age: "",
     Gender: "Male",
     Income: "",
+
     Location: "Bhopal",
+
     Membership: "Gold",
 
     Tenure: "",
@@ -52,6 +59,7 @@ const NextPurchase = () => {
     ReferralCount: "",
 
     PaymentMethod: "Card",
+
     DeviceType: "Mobile",
 
     ReturnRate: "",
@@ -70,41 +78,16 @@ const NextPurchase = () => {
     try {
       setLoading(true);
 
-      const response = await API.post(
-        "/api/next-purchase/predict",
+      const payload = {};
 
-        {
-          ...formData,
+      Object.keys(formData).forEach((key) => {
+        payload[key] =
+          isNaN(formData[key]) || formData[key] === ""
+            ? formData[key]
+            : Number(formData[key]);
+      });
 
-          Age: Number(formData.Age),
-          Income: Number(formData.Income),
-          Tenure: Number(formData.Tenure),
-          TotalSpend: Number(formData.TotalSpend),
-          TotalTransactions: Number(formData.TotalTransactions),
-          AverageOrderValue: Number(formData.AverageOrderValue),
-          PurchaseFrequency: Number(formData.PurchaseFrequency),
-          LastPurchaseDays: Number(formData.LastPurchaseDays),
-          WebsiteVisits: Number(formData.WebsiteVisits),
-          AppUsageMinutes: Number(formData.AppUsageMinutes),
-          LoginFrequency: Number(formData.LoginFrequency),
-          WishlistCount: Number(formData.WishlistCount),
-          CartAbandonmentRate: Number(formData.CartAbandonmentRate),
-          EmailOpenRate: Number(formData.EmailOpenRate),
-          MarketingClicks: Number(formData.MarketingClicks),
-          SatisfactionScore: Number(formData.SatisfactionScore),
-          Rating: Number(formData.Rating),
-          SupportCalls: Number(formData.SupportCalls),
-          Complaints: Number(formData.Complaints),
-          Reviews: Number(formData.Reviews),
-          CustomerHealthScore: Number(formData.CustomerHealthScore),
-          ChurnRisk: Number(formData.ChurnRisk),
-          DiscountUsed: Number(formData.DiscountUsed),
-          CouponUsed: Number(formData.CouponUsed),
-          ReferralCount: Number(formData.ReferralCount),
-          ReturnRate: Number(formData.ReturnRate),
-          LoyaltyPoints: Number(formData.LoyaltyPoints),
-        },
-      );
+      const response = await API.post("/api/next-purchase/predict", payload);
 
       setResult(response.data);
     } catch (error) {
@@ -117,60 +100,214 @@ const NextPurchase = () => {
   const fields = Object.keys(formData);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-white">
-          Next Purchase Prediction Engine
-        </h1>
+    <div className="min-h-screen bg-black text-white p-6">
+      {/* Header */}
 
-        <p className="text-slate-400">
-          AI predicts customer's next expected purchase amount.
-        </p>
+      <div className="mb-10">
+        <div className="flex items-center gap-3">
+          <div
+            className="
+p-3
+rounded-xl
+bg-cyan-500/10
+border
+border-cyan-400/20
+"
+          >
+            <ShoppingCart className="text-cyan-400" />
+          </div>
+
+          <div>
+            <h1
+              className="
+text-3xl
+font-bold
+bg-gradient-to-r
+from-cyan-400
+via-purple-400
+to-pink-400
+bg-clip-text
+text-transparent
+"
+            >
+              Next Purchase Intelligence
+            </h1>
+
+            <p className="text-gray-400 mt-2">
+              AI powered customer spending prediction engine
+            </p>
+          </div>
+        </div>
       </div>
+
+      {/* Result */}
 
       {result && (
         <GlassCard>
           <div className="flex items-center gap-3">
-            <Sparkles className="text-cyan-400" />
+            <Sparkles className="text-yellow-400" />
 
-            <h2 className="text-lg font-bold text-white">
+            <h2
+              className="
+text-xl
+font-bold
+"
+            >
               AI Prediction Result
             </h2>
           </div>
 
-          <h3 className="text-4xl font-bold text-cyan-400 mt-5">
-            ${Number(result["Next Purchase Amount"]).toFixed(2)}
-          </h3>
+          <div
+            className="
+mt-6
+grid
+md:grid-cols-3
+gap-5
+"
+          >
+            <div
+              className="
+bg-white/5
+rounded-xl
+p-5
+border
+border-white/10
+"
+            >
+              <p className="text-gray-400 text-sm">Predicted Purchase Value</p>
 
-          <p className="text-slate-400 mt-2">
-            Predicted future customer spending
-          </p>
+              <h3
+                className="
+text-3xl
+font-bold
+text-cyan-400
+mt-2
+"
+              >
+                ${Number(result["Next Purchase Amount"] || 0).toFixed(2)}
+              </h3>
+            </div>
+
+            <div
+              className="
+bg-white/5
+rounded-xl
+p-5
+border
+border-white/10
+"
+            >
+              <p className="text-gray-400 text-sm">Customer Trend</p>
+
+              <h3
+                className="
+text-xl
+font-bold
+text-green-400
+mt-3
+flex
+gap-2
+items-center
+"
+              >
+                <TrendingUp size={20} />
+                Growing
+              </h3>
+            </div>
+
+            <div
+              className="
+bg-white/5
+rounded-xl
+p-5
+border
+border-white/10
+"
+            >
+              <p className="text-gray-400 text-sm">AI Model</p>
+
+              <h3
+                className="
+text-xl
+font-bold
+text-purple-400
+mt-3
+"
+              >
+                Regression AI
+              </h3>
+            </div>
+          </div>
         </GlassCard>
       )}
 
-      <GlassCard>
-        <h2 className="text-lg font-semibold text-white mb-5">
-          Customer Behavior Input
-        </h2>
+      {/* Input */}
 
-        <div className="grid md:grid-cols-4 gap-4">
+      <GlassCard>
+        <div className="flex items-center gap-3 mb-6">
+          <Brain className="text-purple-400" />
+
+          <h2
+            className="
+text-xl
+font-bold
+"
+          >
+            Customer Behaviour Analysis
+          </h2>
+        </div>
+
+        <div
+          className="
+grid
+md:grid-cols-4
+gap-5
+"
+        >
           {fields.map((field) => (
             <div key={field}>
-              <label className="text-xs text-slate-400">{field}</label>
+              <label
+                className="
+text-xs
+text-gray-400
+"
+              >
+                {field}
+              </label>
 
               <input
                 name={field}
                 value={formData[field]}
                 onChange={handleChange}
+                placeholder={`Enter ${field}`}
                 className="
+
 w-full
+
 mt-2
+
 p-3
+
 rounded-xl
-bg-black/40
+
+bg-black/50
+
 border
-border-white/20
+
+border-white/10
+
 text-white
+
+outline-none
+
+transition
+
+focus:border-cyan-400
+
+focus:ring-2
+
+focus:ring-cyan-400/20
+
 "
               />
             </div>
@@ -181,43 +318,57 @@ text-white
           onClick={predictPurchase}
           disabled={loading}
           className="
-mt-6
+
+mt-10
+
 w-full
+
 py-4
-rounded-xl
+
+rounded-2xl
+
 bg-gradient-to-r
+
 from-cyan-500
-to-purple-600
-text-white
+
+via-purple-600
+
+to-pink-600
+
 font-bold
+
+text-lg
+
+hover:scale-[1.02]
+
+transition
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+shadow-lg
+
+shadow-purple-500/20
+
 "
         >
-          {loading ? "Predicting..." : "Predict Next Purchase 🚀"}
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Predicting...
+            </>
+          ) : (
+            <>
+              <Target />
+              Predict Next Purchase 🚀
+            </>
+          )}
         </button>
-      </GlassCard>
-
-      <GlassCard>
-        <div className="flex gap-3 items-center">
-          <ShoppingCart className="text-purple-400" />
-
-          <h2 className="text-lg font-semibold text-white">
-            Purchase Intelligence
-          </h2>
-        </div>
-
-        <div className="mt-5 grid md:grid-cols-2 gap-5">
-          <div>
-            <p className="text-slate-400 text-sm">Customer Value Trend</p>
-
-            <p className="text-white font-bold text-xl">Growing Customer 📈</p>
-          </div>
-
-          <div>
-            <p className="text-slate-400 text-sm">Prediction Model</p>
-
-            <p className="text-white font-bold text-xl">AI Regression Model</p>
-          </div>
-        </div>
       </GlassCard>
     </div>
   );

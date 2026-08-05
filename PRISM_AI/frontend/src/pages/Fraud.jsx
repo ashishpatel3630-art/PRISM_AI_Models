@@ -6,273 +6,747 @@ import GlassCard from "../components/GlassCard";
 import {
   ShieldAlert,
   ShieldCheck,
-  // AlertTriangle,
   Sparkles,
+  Brain,
+  Loader2,
+  Activity
 } from "lucide-react";
 
+
+
 const Fraud = () => {
-  const [result, setResult] = useState(null);
 
-  const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
-    Age: "",
-    Gender: "Male",
-    Income: "",
+const [result,setResult]=useState(null);
 
-    Location: "Bhopal",
+const [loading,setLoading]=useState(false);
 
-    AccountAgeDays: "",
 
-    Membership: "Gold",
 
-    ProductID: "101",
+const [formData,setFormData]=useState({
 
-    Category: "Electronics",
+Age:"",
+Gender:"Male",
+Income:"",
 
-    Quantity: "",
+Location:"Bhopal",
 
-    Price: "",
+AccountAgeDays:"",
 
-    TotalAmount: "",
+Membership:"Gold",
 
-    PaymentMethod: "Card",
+ProductID:"101",
 
-    CardType: "Visa",
+Category:"Electronics",
 
-    TransactionChannel: "Online",
+Quantity:"",
 
-    DeviceType: "Mobile",
+Price:"",
 
-    Browser: "Chrome",
+TotalAmount:"",
 
-    IPAddress: "",
+PaymentMethod:"Card",
 
-    PreviousTransactionCount: "",
+CardType:"Visa",
 
-    AverageTransactionAmount: "",
+TransactionChannel:"Online",
 
-    TransactionFrequency: "",
+DeviceType:"Mobile",
 
-    TimeSinceLastTransaction: "",
+Browser:"Chrome",
 
-    FailedLoginAttempts: "",
+IPAddress:"",
 
-    PasswordChangeCount: "",
+PreviousTransactionCount:"",
 
-    NewDeviceLogin: "",
+AverageTransactionAmount:"",
 
-    IsInternational: "",
+TransactionFrequency:"",
 
-    DistanceFromHome: "",
+TimeSinceLastTransaction:"",
 
-    CustomerTotalSpend: "",
+FailedLoginAttempts:"",
 
-    CustomerAverageSpend: "",
+PasswordChangeCount:"",
 
-    CustomerComplaints: "",
+NewDeviceLogin:"",
 
-    CustomerRating: "",
+IsInternational:"",
 
-    CustomerHealthScore: "",
+DistanceFromHome:"",
 
-    RefundCount: "",
+CustomerTotalSpend:"",
 
-    ChargebackCount: "",
+CustomerAverageSpend:"",
 
-    SuspiciousActivityCount: "",
+CustomerComplaints:"",
 
-    TransactionMonth: "",
+CustomerRating:"",
 
-    TransactionDay: "",
+CustomerHealthScore:"",
 
-    TransactionHour: "",
-  });
+RefundCount:"",
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
+ChargebackCount:"",
 
-      [e.target.name]: e.target.value,
-    });
-  };
+SuspiciousActivityCount:"",
 
-  const predictFraud = async () => {
-    try {
-      setLoading(true);
+TransactionMonth:"",
 
-      const response = await API.post(
-        "/api/fraud/predict",
+TransactionDay:"",
 
-        {
-          ...formData,
+TransactionHour:""
 
-          Age: Number(formData.Age),
-          Income: Number(formData.Income),
+});
 
-          AccountAgeDays: Number(formData.AccountAgeDays),
 
-          Quantity: Number(formData.Quantity),
 
-          Price: Number(formData.Price),
 
-          TotalAmount: Number(formData.TotalAmount),
 
-          PreviousTransactionCount: Number(formData.PreviousTransactionCount),
+const handleChange=(e)=>{
 
-          AverageTransactionAmount: Number(formData.AverageTransactionAmount),
+setFormData({
 
-          TransactionFrequency: Number(formData.TransactionFrequency),
+...formData,
 
-          TimeSinceLastTransaction: Number(formData.TimeSinceLastTransaction),
+[e.target.name]:e.target.value
 
-          FailedLoginAttempts: Number(formData.FailedLoginAttempts),
+});
 
-          PasswordChangeCount: Number(formData.PasswordChangeCount),
-
-          NewDeviceLogin: Number(formData.NewDeviceLogin),
-
-          IsInternational: Number(formData.IsInternational),
-
-          DistanceFromHome: Number(formData.DistanceFromHome),
-
-          CustomerTotalSpend: Number(formData.CustomerTotalSpend),
-
-          CustomerAverageSpend: Number(formData.CustomerAverageSpend),
-
-          CustomerComplaints: Number(formData.CustomerComplaints),
-
-          CustomerRating: Number(formData.CustomerRating),
-
-          CustomerHealthScore: Number(formData.CustomerHealthScore),
-
-          RefundCount: Number(formData.RefundCount),
-
-          ChargebackCount: Number(formData.ChargebackCount),
-
-          SuspiciousActivityCount: Number(formData.SuspiciousActivityCount),
-
-          TransactionMonth: Number(formData.TransactionMonth),
-
-          TransactionDay: Number(formData.TransactionDay),
-
-          TransactionHour: Number(formData.TransactionHour),
-        },
-      );
-
-      setResult(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fields = Object.keys(formData);
-
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-white">
-          Fraud & Anomaly Detection Engine
-        </h1>
-
-        <p className="text-slate-400">AI powered transaction risk analysis.</p>
-      </div>
-
-      {result && (
-        <GlassCard>
-          <div className="flex items-center gap-3">
-            <Sparkles className="text-cyan-400" />
-
-            <h2 className="text-lg font-bold text-white">AI Fraud Result</h2>
-          </div>
-
-          <h3 className="text-3xl font-bold mt-5">
-            {result["Fraud Prediction"] === 1 ? (
-              <span className="text-red-400">Fraud Detected 🚨</span>
-            ) : (
-              <span className="text-green-400">Transaction Safe ✅</span>
-            )}
-          </h3>
-
-          <p className="text-slate-300 mt-3">
-            Fraud Probability :
-            <span className="text-red-400 font-bold ml-2">
-              {(result["Fraud Probability"] * 100).toFixed(2)}%
-            </span>
-          </p>
-        </GlassCard>
-      )}
-
-      <GlassCard>
-        <h2 className="text-lg font-semibold text-white mb-5">
-          Transaction Risk Input
-        </h2>
-
-        <div className="grid md:grid-cols-4 gap-4">
-          {fields.map((field) => (
-            <div key={field}>
-              <label className="text-xs text-slate-400">{field}</label>
-
-              <input
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                placeholder={field}
-                className="
-w-full
-mt-2
-p-3
-rounded-xl
-bg-black/40
-border
-border-white/20
-text-white
-"
-              />
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={predictFraud}
-          disabled={loading}
-          className="
-mt-6
-w-full
-py-4
-rounded-xl
-bg-gradient-to-r
-from-red-500
-to-purple-600
-text-white
-font-bold
-"
-        >
-          {loading ? "Analyzing Transaction..." : "Run Fraud Detection 🚀"}
-        </button>
-      </GlassCard>
-
-      <GlassCard>
-        <div className="flex items-center gap-3">
-          {result?.["Fraud Prediction"] === 1 ? (
-            <ShieldAlert className="text-red-400" />
-          ) : (
-            <ShieldCheck className="text-green-400" />
-          )}
-
-          <h2 className="text-lg font-semibold text-white">
-            Risk Intelligence
-          </h2>
-        </div>
-
-        <p className="text-slate-400 mt-4">
-          CatBoost based real-time fraud classification model.
-        </p>
-      </GlassCard>
-    </div>
-  );
 };
+
+
+
+
+
+const predictFraud=async()=>{
+
+
+try{
+
+
+setLoading(true);
+
+
+
+const response=await API.post(
+
+"/api/fraud/predict",
+
+Object.fromEntries(
+
+Object.entries(formData).map(([key,value])=>[
+
+key,
+
+Number(value) || value
+
+])
+
+)
+
+);
+
+
+
+setResult(response.data);
+
+
+
+}
+
+catch(error){
+
+console.log(error);
+
+}
+
+finally{
+
+setLoading(false);
+
+}
+
+
+};
+
+
+
+
+
+const fields=Object.keys(formData);
+
+
+
+
+
+
+return (
+
+<div className="
+min-h-screen
+bg-[#050505]
+text-white
+p-6
+md:p-10
+">
+
+
+
+
+
+
+
+{/* HEADER */}
+
+
+<div className="mb-10">
+
+
+<div className="
+flex
+items-center
+gap-4
+">
+
+
+<div className="
+p-4
+rounded-2xl
+bg-white/[0.04]
+border
+border-white/10
+">
+
+
+<Brain
+
+className="text-cyan-400"
+
+/>
+
+
+</div>
+
+
+
+
+<div>
+
+
+<h1 className="
+text-3xl
+font-bold
+">
+
+Fraud Intelligence AI
+
+</h1>
+
+
+<p className="
+text-gray-500
+mt-2
+">
+
+AI powered transaction risk analysis engine
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* RESULT CARD */}
+
+
+
+{
+
+result && (
+
+
+<GlassCard className="mb-8">
+
+
+<div className="
+flex
+items-center
+gap-3
+">
+
+
+<Sparkles
+
+className="text-cyan-400"
+
+/>
+
+
+<h2 className="
+text-xl
+font-semibold
+">
+
+AI Fraud Result
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+<div className="
+mt-6
+flex
+items-center
+gap-5
+">
+
+
+{
+
+result["Fraud Prediction"]===1 ?
+
+
+<ShieldAlert
+
+size={55}
+
+className="text-red-400"
+
+/>
+
+
+:
+
+
+<ShieldCheck
+
+size={55}
+
+className="text-green-400"
+
+/>
+
+
+
+}
+
+
+
+
+
+<div>
+
+
+<h2 className="
+text-3xl
+font-bold
+">
+
+
+{
+
+result["Fraud Prediction"]===1 ?
+
+"Fraud Detected 🚨"
+
+:
+
+"Transaction Safe ✅"
+
+}
+
+
+
+</h2>
+
+
+
+<p className="
+text-gray-400
+mt-3
+">
+
+
+Fraud Probability
+
+
+<span className="
+ml-2
+font-bold
+text-white
+">
+
+
+{
+
+(result["Fraud Probability"]*100)
+
+.toFixed(2)
+
+}%
+
+</span>
+
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</GlassCard>
+
+
+
+)
+
+}
+
+
+
+
+
+
+
+
+
+{/* INPUT CARD */}
+
+
+
+
+<GlassCard>
+
+
+
+
+<div className="
+flex
+items-center
+gap-3
+mb-8
+">
+
+
+<Activity
+
+className="text-cyan-400"
+
+/>
+
+
+<h2 className="
+text-xl
+font-semibold
+">
+
+Transaction Risk Input
+
+</h2>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div className="
+grid
+md:grid-cols-4
+gap-5
+">
+
+
+
+{
+
+
+fields.map(field=>(
+
+
+<div key={field}>
+
+
+<label className="
+text-xs
+text-gray-500
+">
+
+{field}
+
+</label>
+
+
+
+
+<input
+
+
+name={field}
+
+
+value={formData[field]}
+
+
+onChange={handleChange}
+
+
+placeholder={field}
+
+
+
+className="
+
+mt-2
+
+w-full
+
+rounded-xl
+
+bg-black
+
+border
+
+border-white/10
+
+px-4
+
+py-3
+
+text-white
+
+outline-none
+
+focus:border-cyan-400
+
+transition
+
+"
+
+
+
+/>
+
+
+
+</div>
+
+
+
+))
+
+
+}
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<button
+
+onClick={predictFraud}
+
+disabled={loading}
+
+
+className="
+
+mt-10
+
+w-full
+
+rounded-2xl
+
+py-4
+
+bg-white
+
+text-black
+
+font-bold
+
+text-lg
+
+hover:bg-gray-200
+
+hover:scale-[1.02]
+
+transition
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+"
+
+>
+
+
+
+{
+
+loading ?
+
+<>
+
+<Loader2 className="animate-spin"/>
+
+Analyzing Transaction...
+
+</>
+
+
+:
+
+<>
+
+<Sparkles/>
+
+Run Fraud Detection
+
+</>
+
+
+
+}
+
+
+
+</button>
+
+
+
+
+
+
+
+</GlassCard>
+
+
+
+
+
+
+
+
+
+{/* MODEL INFO */}
+
+
+
+
+<GlassCard className="mt-8">
+
+
+<div className="
+flex
+items-center
+gap-3
+">
+
+
+{
+
+result?.["Fraud Prediction"]===1 ?
+
+<ShieldAlert className="text-red-400"/>
+
+:
+
+<ShieldCheck className="text-green-400"/>
+
+}
+
+
+
+<h2 className="
+text-xl
+font-semibold
+">
+
+Risk Intelligence
+
+</h2>
+
+
+</div>
+
+
+
+
+<p className="
+text-gray-500
+mt-4
+">
+
+CatBoost based real-time fraud classification model powering transaction security.
+
+</p>
+
+
+
+</GlassCard>
+
+
+
+
+
+
+
+
+</div>
+
+
+);
+
+
+};
+
 
 export default Fraud;
